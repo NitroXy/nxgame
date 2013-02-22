@@ -32,7 +32,7 @@
 	<head>
 		<title> NitroXy <?=$event?> - NXGame </title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<link rel="stylesheet" type="text/css" href="/style.css"/>
 	</head>
 	<body>
 		<div id="wrapper">
@@ -54,25 +54,30 @@
 					<? if($u->admin) { ?>
 						<li> <a href="/admin"> Admin </a> </li>
 					<? } ?>
+				</ul>
 			</div>
 			<!-- ALl fucking content ! :D -->
 			<div id="content">
 				<?php
-					//Show flash messages
-					foreach($flash as $class => $msg) {
-						if(is_array($msg)) {
-							foreach($msg as $m) { 
-								?> <p class="<?=$class?>"> <?=$m?> </p> <?
-							}
-						} else {
-							?> <p class="<?=$class?>"> <?=$msg?> </p> <?
-						}
-					}
 
 					//Display the controller
 					try {
 						$controller = Controller::factory($path);
-						echo exec_controller($controller, $path);
+						$content =  exec_controller($controller, $path);
+
+						//Show flash messages
+						foreach($flash as $class => $msg) {
+							if(is_array($msg)) {
+								foreach($msg as $m) { 
+									?> <p class="<?=$class?>"> <?=$m?> </p> <?
+								}
+							} else {
+								?> <p class="<?=$class?>"> <?=$msg?> </p> <?
+							}
+						}
+
+						//Show content
+						echo $content;
 					} catch(HTTPRedirect $e){
 						//Set flash for next redirect
 						if(isset($flash)) {
@@ -82,7 +87,6 @@
 						header("Location: {$e->url}");
 						exit();
 					} catch (HTTPError $e){ 
-						//TODO: add styling
 						echo "<h2> {$e->title()} </h2> <p> {$e->message()} </p>";
 					} catch(Exception $e){
 						echo "<h2> Error </h2> <p> {$e->getMessage()} </p>";

@@ -7,7 +7,7 @@ function is_loggedin() {
 
 function ensure_login() {
 	global $u;
-	if(is_loggedin()){
+	if(!is_loggedin()){
 		throw new HTTPError403();
 	}
 }
@@ -17,6 +17,14 @@ function ensure_admin() {
 	if(!$u && !$u->admin){
 		throw new HTTPError403();
 	}
+}
+
+/* no idea why I put it here ... */
+function postdata($s) {
+	return $_POST[$s];
+}
+function getdata($s) {
+	return $_GET[$s];
 }
 
 function is_post() {

@@ -26,7 +26,7 @@ class NXGameQuestion extends BasicObject {
 		$markdown->no_markup = true;
 		$markdown->nl2br = true;
 
-		return $markdown->transform($text);
+		return html_entity_decode($markdown->transform($text), ENT_QUOTES, "UTF-8");
 	}
 
 	public function question(){ return $question; }
@@ -45,7 +45,7 @@ class NXGame extends BasicObject {
 	}
 
 	public function questions($episode) {
-		return NXGameQuestion::from_episode($event, $episode);
+		return NXGameQuestion::from_episode($this->event, $episode);
 	}
 }
 
