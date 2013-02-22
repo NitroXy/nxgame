@@ -51,7 +51,7 @@
 					<li> <a href="/"> Startsida </a> </li>
 					<li> <a href="/info"> Regler & Info </a> </li>
 					<li> <a href="/game"> Game </a> </li>
-					<? if($u->admin) { ?>
+					<? if($u && $u->admin) { ?>
 						<li> <a href="/admin"> Admin </a> </li>
 					<? } ?>
 				</ul>
