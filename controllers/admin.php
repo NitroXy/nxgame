@@ -1,7 +1,7 @@
 <?php
 
 class AdminController extends Controller {
-	public function pre_route() {
+	public function pre_route($path) {
 		ensure_login();
 		ensure_admin();
 	}
