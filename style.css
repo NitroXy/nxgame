@@ -1,0 +1,78 @@
+/* Default settings for all browsers ... */
+ul, ol { list-style:none; }
+img, hr { border: none; }
+h1,h2,h3,h4,h5,h6,p,span,a,li {
+	color: #3f3f3f;
+}
+
+/* General settings */
+body {
+	background: #fafafa;
+	margin: 0;
+	padding: 0;
+}
+
+#wrapper {
+	background: #fff;
+	border: 3px solid #f3f3f3;
+
+	width: 600px;
+	margin: 0 auto;
+	margin-top: 10px;
+	padding: 0;
+	padding-bottom: 30px;
+}
+
+h1 {
+	margin-left: 10px;
+}
+h2 {
+	margin-left: 20px;
+}
+p {
+	margin-left: 30px;
+	margin-right: 30px;
+}
+
+#header p {
+	float: right;
+	margin-top: -35px;
+}
+#header a:hover {
+	color: blue;
+	cursor: pointer;
+}
+
+#nav {
+	border-bottom: 1px solid #9f9f9f;
+}
+#nav ul {
+	padding: 0;
+	margin: 0;
+
+	float: left:
+}
+#nav ul li {
+	display: inline;
+}
+#nav ul li a {
+	text-decoration: none;
+
+	padding: 10px;
+	color: black;
+}
+#nav ul li:hover a {
+	color: blue;
+	cursor: pointer;
+}
+
+#content {
+	clear: both;
+}
+
+#footer {
+	border-top: 1px solid #9f9f9f;
+}
+#footer p {
+	font-size: 10px;
+}
