@@ -1,15 +1,52 @@
 <?php
+require_once "libs/php-markdown/Michelf/Markdown.php";
+require_once "libs/php-markdown/Michelf/MarkdownExtra.php";
+use \Michelf\MarkdownExtra;
 
 class NXGameQuestion extends BasicObject {
-	protected $text;
-	protected $answer;
+	protected static function table_name() {
+		return 'questions';
+	}
 
-	public function text(){ return $text; }
+	public static function from_episode_and_level($event, $episode, $level) {
+		$sel = static::selection(array('event' => $event, 'episode' => $episode, 'level' => $level));
+		if(empty($sel)) {
+			return null;
+		}
+
+		return $sel[0];
+	}
+	public static function from_episode($event, $episode) {
+		return static::selection(array('event' => $event, 'episode' => $episode));
+	}
+
+	public static function parse($text) {
+		$markdown = new MarkdownExtra();
+
+		$markdown->no_markup = true;
+		$markdown->nl2br = true;
+
+		return $markdown->transform($text);
+	}
+
+	public function question(){ return $question; }
 	public function answer() { return $answer; }
+	public function episode() { return $episode; }
+	public function level() { return $level; }
 }
 
 class NXGame extends BasicObject {
-	private $stage;
+	protected static function table_name() {
+		return 'game';
+	}
+
+	static function from_event($ev) {
+		return static::from_field('event', $ev);
+	}
+
+	public function questions($episode) {
+		return NXGameQuestion::from_episode($event, $episode);
+	}
 }
 
 ?>

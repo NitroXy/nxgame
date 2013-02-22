@@ -26,17 +26,12 @@ body {
 h1 {
 	margin-left: 10px;
 }
-h2 {
-	margin-left: 20px;
-}
-p {
-	margin-left: 30px;
-	margin-right: 30px;
-}
 
 #header p {
 	float: right;
 	margin-top: -35px;
+	margin-left: 30px;
+	margin-right: 30px;
 }
 #header a:hover {
 	color: blue;
@@ -67,7 +62,12 @@ p {
 }
 
 #content {
+	margin-left: 30px;
+	margin-right: 30px;
 	clear: both;
+}
+#content h2 {
+	margin-left: -10px;
 }
 
 #footer {
@@ -75,4 +75,24 @@ p {
 }
 #footer p {
 	font-size: 10px;
+}
+
+/* Error, info and success display */
+.error {
+	padding: 7px 10px;
+	margin: 5px 0px;
+	border: 1px solid #000;
+	color: #ea0016;
+	display: block;
+}
+.info {
+	padding: 7px 10px;
+	margin: 5px 0px;
+	border: 1px solid #000;
+}
+.success {
+	padding: 7px 10px;
+	margin: 5px 0px;
+	border: 1px solid #000;
+	color: green;
 }

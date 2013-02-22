@@ -1,4 +1,6 @@
 <?php
+	session_start();
+
 	require("includes.php");
 
 	//Get the path
@@ -11,6 +13,19 @@
 		$raw_content = $controller->route($path->args());
 
 		return $raw_content;
+	}
+
+	//NXGame for this event
+	$nxgame = NXGame::from_event($event);
+	if(!$nxgame) {
+		//wait wat?
+		die("Error: could not find game entry for this event.");
+	}
+
+	$flash = array();
+	if(isset($_SESSION['flash'])) {
+		$flash = unserialize($_SESSION['flash']);
+		unset($_SESSION['flash']);
 	}
 ?>
 <html>
@@ -36,14 +51,34 @@
 					<li> <a href="/"> Startsida </a> </li>
 					<li> <a href="/info"> Regler & Info </a> </li>
 					<li> <a href="/game"> Game </a> </li>
+					<? if($u->admin) { ?>
+						<li> <a href="/admin"> Admin </a> </li>
+					<? } ?>
 			</div>
 			<!-- ALl fucking content ! :D -->
 			<div id="content">
 				<?php
+					//Show flash messages
+					foreach($flash as $class => $msg) {
+						if(is_array($msg)) {
+							foreach($msg as $m) { 
+								?> <p class="<?=$class?>"> <?=$m?> </p> <?
+							}
+						} else {
+							?> <p class="<?=$class?>"> <?=$msg?> </p> <?
+						}
+					}
+
+					//Display the controller
 					try {
 						$controller = Controller::factory($path);
 						echo exec_controller($controller, $path);
 					} catch(HTTPRedirect $e){
+						//Set flash for next redirect
+						if(isset($flash)) {
+							$_SESSION['flash'] = serialize($flash);
+						}
+
 						header("Location: {$e->url}");
 						exit();
 					} catch (HTTPError $e){ 
@@ -57,7 +92,7 @@
 
 			<!-- A footer ! -->
 			<div id="footer">
-				<p>Something about copyright here? </p>
+				<p>Lite copyright? </p>
 			</div>
 		</div>
 	</body>

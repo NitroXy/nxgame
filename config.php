@@ -20,7 +20,6 @@ require_once("model/ValidatingBasicObject.php");
 BasicObject::$output_htmlspecialchars = true;
 
 $db = Config::fix_database();
-$event = "16";
+$event = 16;
 $dir = dirname(__FILE__);
-
 ?>

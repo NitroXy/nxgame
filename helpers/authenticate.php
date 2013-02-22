@@ -19,8 +19,13 @@ function ensure_admin() {
 	}
 }
 
+function is_post() {
+	return (strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0);
+}
+
 function ensure_post() {
-	//To be done
+	if(!is_post())
+		throw new HTTPError403();
 }
 
 ?>

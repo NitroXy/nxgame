@@ -39,6 +39,18 @@ class HTTPError404 extends HTTPError {
 	public function title(){ return "404 Not Found"; }
 	public function message(){ return "Sidan du försöker nå är inte tillgänglig."; }
 }
+class HTTPError403 extends HTTPError {
+	public function __construct() {
+		parent::__construct(403);
+	}
+
+	public function set_http_status() {
+		header("HTTP/1.1 403 Not Found");
+	}
+
+	public function title(){ return "403 Forbidden."; }
+	public function message(){ return "Du saknar behörighet till sidan du försöker nå."; }
+}
 
 class Controller {
 	public $name;
