@@ -42,7 +42,7 @@
 				<? if(is_loggedin()) { ?>
 					<p> Inloggad som <?=$u->username?>, <a href="/user/logout"> logga ut </a></p>
 				<? } else { ?>
-					 <a href="/user/login"> Logga In </a> 
+					<p> <a href="/user/login"> Logga In </a> </p>
 				<? } ?>
 			</div>
 			<!-- Navigation, antingen sidebar eller horisontell -->
