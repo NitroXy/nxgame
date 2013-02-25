@@ -14,7 +14,7 @@ function ensure_login() {
 
 function ensure_admin() {
 	global $u;
-	if(!$u && !$u->admin){
+	if(!($u && $u->admin)) {
 		throw new HTTPError403();
 	}
 }
