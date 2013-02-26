@@ -1,4 +1,5 @@
 <h2> Ny fråga </h2>
+<p> Gamesyntax är en kombination utav både <a href="http://www.w3schools.com/html/default.asp">HTML</a> och <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a>. Du kan välja helt själv i vad du vill skriva frågan i, till och med mixa :) </p>
 <?php
 if($restore) { ?>
 	<form action="/admin/add" method="post">
