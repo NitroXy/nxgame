@@ -1,7 +1,7 @@
 /* Default settings for all browsers ... */
 ul, ol { list-style:none; }
 img, hr { border: none; }
-h1,h2,h3,h4,h5,h6,p,span,a,li {
+h1,h2,h3,h4,h5,h6,p,span,a,li,form {
 	color: #aaa;
 }
 
@@ -24,6 +24,9 @@ body {
 	margin-top: 15px;
 	padding: 0;
 	padding-bottom: 30px;
+
+	position: relative;
+	min-height: 100%;
 }
 
 h1 {
@@ -82,16 +85,26 @@ h1 {
 	margin-left: 30px;
 	margin-right: 30px;
 	clear: both;
+
+	padding-bottom: 50px;
 }
 #content h2 {
 	margin-left: -10px;
 }
 
 #footer {
+	height: 30px;
+	width: 100%;
+
+	position: absolute;
+	bottom: 0;
+	left: 0;
+
 	border-top: 1px solid #3b4f3b;
 }
 #footer p {
 	font-size: 10px;
+	float: right;
 }
 
 /* Error, info and success display */

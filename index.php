@@ -96,7 +96,7 @@
 
 			<!-- A footer ! -->
 			<div id="footer">
-				<p>Lite copyright? </p>
+				<p>Sidan är byggd utav cpluss, Renanyuu samt Ankan </p>
 			</div>
 		</div>
 	</body>
