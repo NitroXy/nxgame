@@ -30,8 +30,7 @@ body {
 	min-height: 100%;
 }
 
-h1 {
-	margin-left: 10px;
+h1,h2 {
 	font-family: _rockwell_;
 }
 p {
