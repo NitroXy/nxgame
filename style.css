@@ -41,6 +41,7 @@ h1 {
 #header h1{
     color:#afffaf;
     opacity:0.1;
+	width:200px;
 }
 #header p {
 	position: relative;
