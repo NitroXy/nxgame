@@ -32,7 +32,13 @@ body {
 
 h1 {
 	margin-left: 10px;
+	font-family: _rockwell_;
 }
+p {
+	font-family: Questrial;
+	font-size: 14px;
+}
+
 #header {
     padding-top:1;
     margin-top:0px;
@@ -109,22 +115,37 @@ h1 {
 	float: right;
 }
 
-/* Error, info and success display */
+/* Error, info and success flash messages */
 .error {
 	padding: 7px 10px;
 	margin: 5px 0px;
-	border: 1px solid #000;
+	border: 1px solid #3b4f3b;
 	color: #ea0016;
-	display: block;
 }
 .info {
 	padding: 7px 10px;
 	margin: 5px 0px;
-	border: 1px solid #000;
+	border: 1px solid #3b4f3b;
+	color: #e5e5e5;
 }
 .success {
 	padding: 7px 10px;
 	margin: 5px 0px;
-	border: 1px solid #000;
+	border: 1px solid #3b4f3b;
 	color: green;
 }
+
+/* Fonts */
+@font-face {
+  	font-family: 'Questrial';
+	font-style: normal;
+  	font-weight: 400;
+	src: local('Questrial'), local('Questrial-Regular'), url(http://themes.googleusercontent.com/static/fonts/questrial/v3/MYWJ4lYm5dbZ1UBuYox79D8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+}
+@font-face {
+	font-family: '_rockwell_';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Rockwell'), url(fonts/rockwell.ttf);
+}
+
