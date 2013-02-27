@@ -27,6 +27,15 @@
 		$flash = unserialize($_SESSION['flash']);
 		unset($_SESSION['flash']);
 	}
+
+	//Build menu
+	$menu = new Menu();
+	$menu->AddItem("/", "Startsida", "main");
+	$menu->AddItem("/info", "Regler & Info", "info");
+	$menu->AddItem("/game", "Game", "game");
+	if($u && $u->admin) {
+		$menu->AddItem("/admin", "Admin", "admin");
+	}
 ?>
 <html>
 	<head>
@@ -47,14 +56,7 @@
 			</div>
 			<!-- Navigation, antingen sidebar eller horisontell -->
 			<div id="nav" class="nav">
-				<ul>
-					<li> <a href="/"> Startsida </a> </li>
-					<li> <a href="/info"> Regler & Info </a> </li>
-					<li> <a href="/game"> Game </a> </li>
-					<? if($u && $u->admin) { ?>
-						<li> <a href="/admin"> Admin </a> </li>
-					<? } ?>
-				</ul>
+				<?=$menu->render($path->controller());?>
 			</div>
 			<!-- ALl fucking content ! :D -->
 			<div id="content">

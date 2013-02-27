@@ -58,16 +58,17 @@ p {
 	margin-top: -35px;
 	margin-left: 30px;
 	margin-right: 30px;
-	color:acacac;
+	color: #acacac;
 }
 #header a:hover {
-	color: acacac;
+	color: #acacac;
 	cursor: pointer;
 }
 
 #nav {
 	border-top: 1px solid #3b4f3b;
 	border-bottom: 1px solid #3b4f3b;
+	padding: 5px;
 	background:#000;
 }
 #nav ul {
@@ -81,12 +82,17 @@ p {
 }
 #nav ul li a {
 	text-decoration: none;
-	padding: 10px;
-	color:fff;
+	padding-right: 10px;
+	padding-left: 10px;
+	color: #fff;
 }
 #nav ul li:hover a {
-	color: acacac;
+	color: #acacac;
 	cursor: pointer;
+}
+#nav ul li a.selected {
+	
+	border-bottom: 1px solid #fff;
 }
 
 #content {

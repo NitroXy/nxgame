@@ -13,5 +13,6 @@ require("helpers/flash.php");
 // Models
 require("model/Path.php");
 require("model/NXGame.php");
+require("model/Menu.php");
 
 ?>
