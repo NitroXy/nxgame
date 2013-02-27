@@ -83,7 +83,7 @@ p {
 	text-decoration: none;
 	padding-right: 10px;
 	padding-left: 10px;
-	color: #fff;
+	color: #f22;
 }
 #nav ul li:hover a {
 	color: #acacac;
@@ -101,6 +101,9 @@ p {
 	clear: both;
 
 	padding-bottom: 50px;
+}
+#content a:hover{
+    color:#f22;
 }
 #content h2 {
 	margin-left: -10px;
