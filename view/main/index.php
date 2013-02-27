@@ -1,6 +1,6 @@
 <view>
 	<content>
-		<center><h1><u>NXGame 16</u></h1></center>
+		<h1>NXGame 16</h1>
 		<p>Välkommen in i värmen till det som i begynnelsen refererades till som "?main=nxgame", gömd från resten av nitroxys extremt underbara hemsida och verklighet. Nu, ett helt millenium (+-1000 år) senare, har nxgame återupptagits, med nya troll och mindre kaffedrickare. Har du vad som krävs för att utmana dig själv och alla fiender du kommer att stöta på?</p>
 
 		<p>NXGame är en rolig och underhållande <a href="http://en.wikipedia.org/wiki/Puzzle_hunt">problemlösartävling</a>, där vem som helst kan vara med.</p>
