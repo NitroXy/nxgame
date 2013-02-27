@@ -40,6 +40,8 @@ h1 {
     opacity:0.1;
 }
 #header p {
+	position: relative;
+	z-index: 1;
 
 	float: right;
 	margin-top: -35px;
