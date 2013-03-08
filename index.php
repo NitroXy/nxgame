@@ -46,7 +46,6 @@
 	</head>
 	<body>
 		<div id="wrapper">
-			<!-- Vi skall väl ha någon typ utav header? -->
 			<div id="header">
 				<h1> NXGame<?=$event?> </h1>
 				<? if(is_loggedin()) { ?>
@@ -55,11 +54,9 @@
 					<p> <a href="/user/login"> Logga In </a> </p>
 				<? } ?>
 			</div>
-			<!-- Navigation, antingen sidebar eller horisontell -->
 			<div id="nav" class="nav">
 				<?=$menu->render($path->controller());?>
 			</div>
-			<!-- ALl fucking content ! :D -->
 			<div id="content">
 				<?php
 
@@ -97,7 +94,6 @@
 				?>
 			</div>
 
-			<!-- A footer ! -->
 			<div id="footer">
 				<p>Sidan är byggd utav cpluss, Renanyuu samt Ankan </p>
 			</div>
