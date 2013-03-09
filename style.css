@@ -125,6 +125,7 @@ a:hover {
 #footer p {
 	font-size: 10px;
 	float: right;
+	margin-right:10px;
 }
 
 /* Error, info and success flash messages */
