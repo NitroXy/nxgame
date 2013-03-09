@@ -95,7 +95,7 @@
 			</div>
 
 			<div id="footer">
-				<p>Sidan är byggd utav cpluss, Renanyuu samt Ankan </p>
+				<a href="images/derp.jpg"><p>Sidan är byggd utav cpluss, Renanyuu samt Ankan </p></a>
 			</div>
 		</div>
 	</body>
