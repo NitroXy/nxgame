@@ -4,7 +4,7 @@
 <p>Du vinner NXGame genom att vara den som först svarar rätt på alla frågorna.</p>
 <p>Det är inte tillåtet att på något sätt förstöra ledtrådar, t.ex riva ner lappar och ta bort saker som tillhör nxgame. Nxgame är till för att ha kul genom att tävla mot andra deltagare, och inte förstöra för dem. Skulle du misstänka att det är något som någon har rivit ned, tagit bort, eller förstört, gå till info/support och be att få prata med nxgame-crew. Gillar du inte människor så går det även bra att kontakta oss på irc, <strong>#nitroxy.nxgame @ EFNet.</strong></p>
 <p>Du måste vara på plats i Tyngelvi (dvs NitroXy), med en platsbiljett, för att kunna vinna.</p>
-<p>Alla lösenord är inte case-sensitive, dvs om du fyllt i ett lösenords-ord där ordet är korrekt, men du har mixat stora och små bokstäver, så gör det inget, det accepteras ändå.</p>
+<p>Alla lösenord är case-insensitive, dvs om du fyllt i ett lösenords-ord där ordet är korrekt, men du har mixat stora och små bokstäver, så gör det inget, det accepteras ändå.</p>
 <p>Lösenorden är aldrig helt slumpade siffror och bokstäver.</p>
 <br>
 
@@ -22,8 +22,8 @@
 <h2>Generella saker man kan testa om man har fastnat:</h2>
 
 <ul>
-	<li>*  Googla</li>
-	<li>*  Gå runt och se om du kan hitta något som relaterar till uppgiften du håller på med</li>
+	<li>* Googla</li>
+	<li>* Gå runt och se om du kan hitta något som relaterar till uppgiften du håller på med</li>
 	<li>* Konvertera till HEX</li>
 	<li>* Konvertera till Binärt</li>
 	<li>* Konvertera till Base64</li>
@@ -36,6 +36,7 @@
 	<li>* Tolka siffror som ASCII-kod, datum, koordinater, telefonnummer med mera</li>
 	<li>* Mystiska trådlösa anslutningar, såsom WLAN och bluetooth
 	<li>* En bild kan ibland vara mer än en bild
+	<li>* En del meningar och ord betyder ibland ingenting alls, men ibland kan det betyda allt. Använd orden, använd bokstäverna. Sätt ihop dem. Lek runt med dem</li>
 	<li>* Om du känner att inget som du kan komma på för att lösa problemet fungerar: ta en paus, tänk på annat, gå och ät en stund, häng lite i offlan, prata lite med trevliga deltagare och crew, sov, och kom sedan tillbaka med nya tankar och förslag till hur du ska lösa uppgiften</li>
 </ul>
 <br>
