@@ -16,6 +16,10 @@
 </div>
 
 <div class="info">
+	<p> För att se alla svaren, klicka <a href="/admin/answers">här</a> </p>
+</div>
+
+<div class="info">
 	<h3> Frågor </h3>
 
 	<?php

@@ -108,6 +108,29 @@ class AdminController extends Controller {
 
 		return $this->render("add", array('restore' => 0));
 	}
+
+	public function get_answers() {
+		global $db;
+		$result = $db->query("select answers.episode,answers.level,name,answer,correct from answers inner join user using(user_id);"); 
+			//LogAnswer::selection(array());
+
+		$answers = array();
+		while($row = $result->fetch_object()) {
+			$answers[] = array('episode' => $row->episode,
+							   'level'   => $row->level,
+							   'name'    => $row->name,
+							   'answer'  => $row->answer,
+							   'correct' => $row->correct);
+		}
+
+		$result->close();
+
+		echo $this->render('get_answers', array('answers' => $answers));
+		die();
+	}
+	public function answers() {
+		return $this->render('answers');
+	}
 }
 
 ?>

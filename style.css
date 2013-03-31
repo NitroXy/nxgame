@@ -148,6 +148,13 @@ a:hover {
 	color: green;
 }
 
+.correct {
+	color: green;
+}
+.wrong {
+	color: red;
+}
+
 /* Fonts */
 @font-face {
   	font-family: 'Questrial';
@@ -161,4 +168,3 @@ a:hover {
 	font-weight: 400;
 	src: local('Rockwell'), url(fonts/rockwell.ttf);
 }
-
