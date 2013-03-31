@@ -1,7 +1,7 @@
 /* Default settings for all browsers ... */
 ul, ol { list-style:none; }
 img, hr { border: none; }
-h1,h2,h3,h4,h5,h6,p,span,a,li,form {
+h1,h2,h3,h4,h5,h6,p,span,a,li,form,td,th {
 	color: #aaa;
 }
 
