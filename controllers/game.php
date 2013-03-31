@@ -41,11 +41,11 @@ class GameController extends Controller {
 		global $u, $event, $nxgame;
 
 		$q = NXGameQuestion::from_episode_and_level($event, $u->episode, $u->level);
-		$answer = $_POST['answer'];
+		$answer = strtolower(trim($_POST['answer']));
 
-		AnswerLogger::Add($answer, (strtolower($answer) == $q->answer));
+		AnswerLogger::Add($answer, ($answer == $q->answer));
 
-		if(strtolower($answer) != $q->answer) {
+		if($answer != $q->answer) {
 			flash("error", "Du svarade fel.");
 			throw new HTTPRedirect('/game');
 		}
