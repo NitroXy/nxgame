@@ -43,9 +43,9 @@ class GameController extends Controller {
 		$q = NXGameQuestion::from_episode_and_level($event, $u->episode, $u->level);
 		$answer = $_POST['answer'];
 
-		AnswerLogger::Add($answer, ($answer == $q->answer));
+		AnswerLogger::Add($answer, (strtolower($answer) == $q->answer));
 
-		if($answer != $q->answer) {
+		if(strtolower($answer) != $q->answer) {
 			flash("error", "Du svarade fel.");
 			throw new HTTPRedirect('/game');
 		}
