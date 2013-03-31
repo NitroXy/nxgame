@@ -110,7 +110,7 @@ class AdminController extends Controller {
 	}
 
 	public function get_answers() {
-		$answers = LogAnswer::selection(array());
+		$answers = LogAnswer::selection(array("@order" => "id:desc"));
 
 		echo $this->render('get_answers', array('answers' => $answers));
 		die();
