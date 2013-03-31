@@ -110,20 +110,7 @@ class AdminController extends Controller {
 	}
 
 	public function get_answers() {
-		global $db;
-		$result = $db->query("select answers.episode,answers.level,name,answer,correct from answers inner join user using(user_id) order by id desc;"); 
-			//LogAnswer::selection(array());
-
-		$answers = array();
-		while($row = $result->fetch_object()) {
-			$answers[] = array('episode' => $row->episode,
-							   'level'   => $row->level,
-							   'name'    => $row->name,
-							   'answer'  => $row->answer,
-							   'correct' => $row->correct);
-		}
-
-		$result->close();
+		$answers = LogAnswer::selection(array());
 
 		echo $this->render('get_answers', array('answers' => $answers));
 		die();
