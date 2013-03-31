@@ -111,7 +111,7 @@ class AdminController extends Controller {
 
 	public function get_answers() {
 		global $db;
-		$result = $db->query("select answers.episode,answers.level,name,answer,correct from answers inner join user using(user_id);"); 
+		$result = $db->query("select answers.episode,answers.level,name,answer,correct from answers inner join user using(user_id) order by id desc;"); 
 			//LogAnswer::selection(array());
 
 		$answers = array();
