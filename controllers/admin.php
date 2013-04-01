@@ -109,8 +109,14 @@ class AdminController extends Controller {
 		return $this->render("add", array('restore' => 0));
 	}
 
-	public function get_answers() {
-		$answers = LogAnswer::selection(array("@order" => "id:desc"));
+	public function get_answers($filter = null, $arg = null) {
+		if($filter == null and $arg == null) {
+			$answers = LogAnswer::selection(array("@order" => "id:desc"));
+		} else if($filter == "name") {
+			$answers = LogAnswer::selection(array("@order" => "id:desc", "user_id" => $arg));
+		} else if($filter == "limit") {
+			$answers = LogAnswer::selection(array("@order" => "id:desc", "@limit" => array(0, $arg)));
+		}
 
 		echo $this->render('get_answers', array('answers' => $answers));
 		die();
