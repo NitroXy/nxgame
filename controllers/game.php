@@ -87,6 +87,14 @@ class GameController extends Controller {
 		flash("success", "Du svarade rätt.");
 		throw new HTTPRedirect('/game');
 	}
+
+	public function won() {
+		return $this->render('won');
+	}
+
+	public function finish() {
+		return $this->render('finish');
+	}
 }
 
 ?>
