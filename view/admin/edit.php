@@ -5,6 +5,17 @@
 	Nivå: <input type="text" name="level" value="<?=$level?>"/> <br><br>
 	Fråga: <br>
 	<textarea name="question" rows="20" cols="120"><?=$question?></textarea> <br><br>
-	Svar: </span><input type="text" name="answer" value="<?=$answer?>"/> <br><br>
+    Nuvarande svar: 
+    <br> 
+    <ul>
+    <?php
+    $allanswers = explode(',',$answer);
+    foreach($allanswers as $i) {?>
+        <li> <?=$i?> 
+            <a href="/admin/remove_answer/<?=$id?>/<?=$i?>"><img src="/images/cross.png"></a></li>
+    <?php }
+    ?> 
+    </ul>
+	Lägg till svar (för flera svar, separera med komma): </span><input type="text" name="answer" value=""/> <br><br>
 	<input type="submit" value="Spara"/>
 </form>

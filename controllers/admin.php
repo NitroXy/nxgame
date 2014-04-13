@@ -38,6 +38,29 @@ class AdminController extends Controller {
 		throw new HTTPRedirect("/admin");
 	}
 
+    public function remove_answer($id=null, $answer=null) {
+        if($id == null || $answer == null) {
+            flash("error", "DIN MAMMA GÖR FEL");
+            throw new HTTPRedirect("/admin");
+        }
+        $q=NXGameQuestion::from_id($id);
+		if(!$q) {
+			flash("error", "Kunde inte hitta en fråga med id: {$id}");
+			throw new HTTPRedirect("/admin");
+		}
+        $allAnswers = explode(",",$q->answer);
+        foreach($allAnswers as $i => $answers) {
+            if ($i == $answer) {
+                unset($allAnswers[$i+1]);
+            }
+        }
+        $q->answer = implode(",",$allAnswers);
+        $q->commit();
+        throw new HTTPRedirect("/admin/edit/$id");
+
+                
+    }
+
 	public function edit($id=null) {
 		if($id == null) {
 			flash("error", "Kan inte redigera en fråga utan id");
@@ -51,14 +74,16 @@ class AdminController extends Controller {
 		}
 
 		if(is_post()) {
+            $allAnswers = explode(",",$q->answer);
+            array_push($allAnswers, postdata('answer'));
 			$q->episode = postdata('episode');
 			$q->level = postdata('level');
 			$q->question = postdata('question');
-			$q->answer = postdata('answer');
+            $q->answer = implode(",",$allAnswers);
 			$q->commit();
 
 			flash("success", "Frågan har blivit ändrad.");
-			throw new HTTPRedirect("/admin");
+			throw new HTTPRedirect("/admin/edit/$id");
 		}
 
 		return $this->render("edit", array('id' => $id, 'question' => $q->question, 'episode' => $q->episode, 'level' => $q->level, 'answer' => $q->answer));
