@@ -7,6 +7,12 @@
 	<span>Nuvarande episod:</span> <input type="text" name="current_episode" value="<?=$nxgame->current_episode?>"/> </br>
 	<span>Sista episod: </span><input type="text" name="final_episode" value="<?=$nxgame->final_episode?>"/> </br>
 	<span>Vinnare: </span><input type="text" name="winner" value="<?=$nxgame->winner?>"/> </br>
+	<span>Är igång </span><input type="checkbox" name="is_started" value="1"
+    <?php
+    if ($nxgame->is_started) {
+        echo "checked";
+    } ?>>
+</br></br>
 	<input type="submit" name="submit" value="Spara"/>
 </form>
 

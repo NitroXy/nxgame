@@ -18,8 +18,8 @@ class AdminController extends Controller {
 		$nxgame->current_episode = postdata('current_episode');
 		$nxgame->final_episode = postdata('final_episode');
 		$nxgame->winner = postdata('winner');
+        $nxgame->is_started = postdata('is_started');
 		$nxgame->commit();
-
 		flash("success", "Ändringarna har sparats.");
 		throw new HTTPRedirect("/admin");
 	}
@@ -32,6 +32,7 @@ class AdminController extends Controller {
 		$game->event = $event + 1;
 		$game->current_episode = 1;
 		$game->final_episode = 2;
+        $game->is_started = false;
 		$game->commit();
 
 		flash("success", "NXGame".($event + 1)." har skapats. Du behöver bara byta event i 'config.php' för att växla.");
