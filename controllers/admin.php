@@ -50,11 +50,11 @@ class AdminController extends Controller {
 		}
         $allAnswers = explode(",",$q->answer);
         foreach($allAnswers as $i => $answers) {
-            if ($i == $answer) {
-                unset($allAnswers[$i+1]);
+            if ($answers == $answer && sizeof($allAnswers) > 1) {
+                unset($allAnswers[$i]);
             }
         }
-        $q->answer = implode(",",$allAnswers);
+        $q->answer = implode(",", $allAnswers);
         $q->commit();
         throw new HTTPRedirect("/admin/edit/$id");
 
@@ -74,12 +74,31 @@ class AdminController extends Controller {
 		}
 
 		if(is_post()) {
-            $allAnswers = explode(",",$q->answer);
-            array_push($allAnswers, postdata('answer'));
+            //check for empty fields
+            if (postdata('episode' == "")) {
+                flash("error", "Fältet 'episode' är tomt");
+                throw new HTTPRedirect("/admin/edit/$id");
+            }
+
+            if (postdata('level' == "")) {
+                flash("error", "Fältet 'Nivå' är tomt");
+                throw new HTTPRedirect("/admin/edit/$id");
+            }
+
+            if (postdata('question' == "")) {
+                flash("error", "Tomma frågor är inte nice");
+                throw new HTTPRedirect("/admin/edit/$id");
+            }
+
+            if (postdata('answer') != "") {
+                $allAnswers = explode(",",$q->answer);
+                array_push($allAnswers, postdata('answer'));
+                $q->answer = implode(",",$allAnswers);
+            } else {
+            }
 			$q->episode = postdata('episode');
 			$q->level = postdata('level');
-			$q->question = postdata('question');
-            $q->answer = implode(",",$allAnswers);
+            $q->question = postdata('question');
 			$q->commit();
 
 			flash("success", "Frågan har blivit ändrad.");
