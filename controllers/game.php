@@ -45,8 +45,9 @@ class GameController extends Controller {
 		global $u, $event, $nxgame;
 
 		$q = NXGameQuestion::from_episode_and_level($event, $u->episode, $u->level);
-		$answer = strtolower(trim($_POST['answer']));
+		$answer = mb_strtolower(trim($_POST['answer']),'UTF-8');
         $allAnswers = explode(",",$q->answer);
+        $correct = false;
         foreach($allAnswers as $ans) {
             if ($answer == $ans) {
                 $correct = True;
@@ -91,6 +92,7 @@ class GameController extends Controller {
 		
 		//Next level
 		$u->level = $u->level + 1;
+        $u->initqtime = date('Y:m:d H-i-s');	
 		$u->commit();
 
 
