@@ -35,7 +35,12 @@ body {
 	min-height: 100%;
 }
 
-h1,h2 {
+hr {
+    border-top:#cccccc 1px solid;
+    height: 1px;
+}
+
+h1,h2,h3 {
 	font-family: _rockwell_;
 }
 p {
@@ -108,8 +113,12 @@ a:hover {
 
 	padding-bottom: 50px;
 }
-#content h2 {
+#content h1 {
 	margin-left: -10px;
+}
+
+#content h2 {
+	margin-left: -5px;
 }
 
 #footer {

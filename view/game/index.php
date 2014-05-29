@@ -1,4 +1,5 @@
-<h2> Episod <?=$episode?> - Nivå <?=$level?> </h2>
+<h1> Episod <?=$episode?> - Nivå <?=$level?> </h1>
+<h2> <? echo $title; ?></h2>
 <p> <? echo $question; ?> </p>
 
 <form method="post" action="/game/answer">

@@ -3,10 +3,13 @@
 <form action="/admin/edit/<?=$id?>" method="post">
  	<span>Episod: <input type="text" name="episode" value="<?=$episode?>"/> <br><br>
 	Nivå: <input type="text" name="level" value="<?=$level?>"/> <br><br>
+    Rubrik: <input type="text" name="title" value="<?=$title?>"/> <br><br>
 	Fråga: <br>
-	<textarea name="question" rows="20" cols="120"><?=$question?></textarea> <br><br>
-    Nuvarande svar: 
-    <br> 
+	<textarea name="question" rows="20" cols="100"><?=$question?></textarea> <br><br>
+    <input type="submit" name="updateQuestion" value="Uppdatera fråga">
+    <br><br>
+    <hr>
+    <h2> Korrekta svar: </h2>
     <ul>
     <?php
     $allanswers = explode(',',$answer);
@@ -17,5 +20,5 @@
     ?> 
     </ul>
 	Lägg till svar (för flera svar, separera med komma): </span><input type="text" name="answer" value=""/> <br><br>
-	<input type="submit" value="Spara"/>
+	<input type="submit" name="updateAnswers" value="Lägg till svar"/>
 </form>

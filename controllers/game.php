@@ -33,7 +33,7 @@ class GameController extends Controller {
 		}
 
 		$question = NXGameQuestion::parse($q->question);
-		return $this->render('index', array('question' => $question, 'episode' => $u->episode, 'level' => $u->level));
+		return $this->render('index', array('question' => $question, 'episode' => $u->episode, 'title' => $q->title, 'level' => $u->level));
 	}
 
 	public function answer() {

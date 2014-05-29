@@ -76,37 +76,44 @@ class AdminController extends Controller {
 
 		if(is_post()) {
             //check for empty fields
-            if (postdata('episode' == "")) {
+            if (isset($_POST['updateQuestion'])) {
+                if (postdata('episode' == "")) {
                 flash("error", "Fältet 'episode' är tomt");
                 throw new HTTPRedirect("/admin/edit/$id");
-            }
+                }
 
-            if (postdata('level' == "")) {
+                if (postdata('level' == "")) {
                 flash("error", "Fältet 'Nivå' är tomt");
                 throw new HTTPRedirect("/admin/edit/$id");
-            }
+                }
 
-            if (postdata('question' == "")) {
+                if (postdata('question' == "")) {
                 flash("error", "Tomma frågor är inte nice");
                 throw new HTTPRedirect("/admin/edit/$id");
-            }
-
-            if (postdata('answer') != "") {
-                $allAnswers = explode(",",$q->answer);
-                array_push($allAnswers, postdata('answer'));
-                $q->answer = implode(",",$allAnswers);
+                }
+                if (postdata('title' == "")) {
+                flash("error", "Du vill ha en rubrik.");
+                throw new HTTPRedirect("/admin/edit/$id");
+                }
+                $q->episode = postdata('episode');
+                $q->level = postdata('level');
+                $q->question = postdata('question');
+                $q->title = postdata('title');
             } else {
+
+                if (postdata('answer') != "") {
+                    $allAnswers = explode(",",$q->answer);
+                    array_push($allAnswers, postdata('answer'));
+                    $q->answer = implode(",",$allAnswers);
+                }
             }
-			$q->episode = postdata('episode');
-			$q->level = postdata('level');
-            $q->question = postdata('question');
 			$q->commit();
 
 			flash("success", "Frågan har blivit ändrad.");
 			throw new HTTPRedirect("/admin/edit/$id");
 		}
 
-		return $this->render("edit", array('id' => $id, 'question' => $q->question, 'episode' => $q->episode, 'level' => $q->level, 'answer' => $q->answer));
+		return $this->render("edit", array('id' => $id, 'question' => $q->question, 'episode' => $q->episode, 'level' => $q->level, 'answer' => $q->answer, 'title' => $q->title));
 	}
 
 	public function add() {
@@ -126,6 +133,10 @@ class AdminController extends Controller {
 				flash("error", "En tom fråga?!?!?!?!");
 				return $this->render("add", array('restore' => 1, 'episode' => postdata('episode'), 'level' => postdata('level'), 'question' => postdata('question'), 'answer' => postdata('answer')));
 			}
+			if(postdata('title') == "") {
+				flash("error", "Du måste ha en rubrik.");
+				return $this->render("add", array('restore' => 1, 'episode' => postdata('episode'), 'level' => postdata('level'), 'question' => postdata('question'), 'answer' => postdata('answer')));
+            }
 			if(postdata('answer') == "") {
 				flash("error", "En fråga utan svar, är du dum eller?");
 				return $this->render("add", array('restore' => 1, 'episode' => postdata('episode'), 'level' => postdata('level'), 'question' => postdata('question'), 'answer' => postdata('answer')));
@@ -145,6 +156,7 @@ class AdminController extends Controller {
 			$q->level = postdata('level');
 			$q->question = postdata('question');
 			$q->answer = postdata('answer');
+            $q->title = postdata('title');
 			$q->commit();
 
 			flash("success", "Frågan har skapats.");

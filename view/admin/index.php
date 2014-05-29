@@ -34,7 +34,7 @@
 			?> <h4> Episod <?=$episode?> </h4> <?
 			foreach($nxgame->questions($episode) as $q) {
 				?> 
-					<span>Fråga <?=$q->level?> - <a href="/admin/edit/<?=$q->id?>"> Ändra </a></span>
+					<span>Fråga <?=$q->level?> - <?=$q->title?> - <a href="/admin/edit/<?=$q->id?>"> Ändra </a></span>
 					</br>
 				<?	
 			}

@@ -31,6 +31,7 @@ class NXGameQuestion extends BasicObject {
 
 	public function question(){ return $question; }
 	public function answer() { return $answer; }
+	public function title() { return $title; }
 	public function episode() { return $episode; }
 	public function level() { return $level; }
 }
