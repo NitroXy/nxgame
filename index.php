@@ -32,7 +32,7 @@
 	$menu = new Menu();
 	$menu->AddItem("/", "Startsida", "main");
 	$menu->AddItem("/info", "Regler & Info", "info");
-	$menu->AddItem("/game", "Game", "game");
+	$menu->AddItem("/game", "Spela här", "game");
 	if($u && $u->admin) {
 		$menu->AddItem("/admin", "Admin", "admin");
 	}
