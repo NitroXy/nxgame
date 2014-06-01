@@ -49,5 +49,9 @@ class NXGame extends BasicObject {
 		return NXGameQuestion::from_episode($this->event, $episode);
 	}
 }
-
+class NXGameAnswer extends BasicObject {
+    protected static function table_name() {
+        return 'questionanswers';
+    }
+}
 ?>

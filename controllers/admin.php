@@ -40,23 +40,14 @@ class AdminController extends Controller {
 	}
 
     public function remove_answer($id=null, $answer=null) {
-        if($id == null || $answer == null) {
-            flash("error", "DIN MAMMA GÖR FEL");
-            throw new HTTPRedirect("/admin");
-        }
         $q=NXGameQuestion::from_id($id);
 		if(!$q) {
 			flash("error", "Kunde inte hitta en fråga med id: {$id}");
 			throw new HTTPRedirect("/admin");
 		}
-        $allAnswers = explode(",",$q->answer);
-        foreach($allAnswers as $i => $answers) {
-            if ($answers == $answer && sizeof($allAnswers) > 1) {
-                unset($allAnswers[$i]);
-            }
-        }
-        $q->answer = implode(",", $allAnswers);
-        $q->commit();
+        $a=NXGameAnswer::first(array('ans_id' => $id, 'answer' => $answer));
+        $a->delete();
+
         throw new HTTPRedirect("/admin/edit/$id");
 
                 
@@ -99,15 +90,18 @@ class AdminController extends Controller {
                 $q->level = postdata('level');
                 $q->question = postdata('question');
                 $q->title = postdata('title');
+                $q->commit();
             } else {
 
-                if (postdata('answer') != "") {
-                    $allAnswers = explode(",",$q->answer);
-                    array_push($allAnswers, postdata('answer'));
-                    $q->answer = implode(",",$allAnswers);
+                if (postdata('answer') == "") {
+                    flash("error", "En fråga utan svar?");
+                    throw new HTTPRedirect("/admin/edit/$id");
                 }
+                $a = new NXGameAnswer();
+                $a->ans_id = $q->id;
+                $a->answer = postdata('answer');
+                $a->commit();   
             }
-			$q->commit();
 
 			flash("success", "Frågan har blivit ändrad.");
 			throw new HTTPRedirect("/admin/edit/$id");
@@ -123,43 +117,47 @@ class AdminController extends Controller {
 			//Check for empty fields
 			if(postdata('episode') == "") {
 				flash("error", "Episod är ett tomt fält.");
-				return $this->render("add", array('restore' => 1, 'episode' => postdata('episode'), 'level' => postdata('level'), 'question' => postdata('question'), 'answer' => postdata('answer')));
+				return $this->render("add", array('restore' => 1, 'episode' => postdata('episode'), 'level' => postdata('level'), 'question' => postdata('question'), 'answer' => postdata('answer'), 'title' => postdata('title')));
 			}
 			if(postdata('level') == "") {
 				flash("error", "Nivå är ett tomt fält.");
-				return $this->render("add", array('restore' => 1, 'episode' => postdata('episode'), 'level' => postdata('level'), 'question' => postdata('question'), 'answer' => postdata('answer')));
+				return $this->render("add", array('restore' => 1, 'episode' => postdata('episode'), 'level' => postdata('level'), 'question' => postdata('question'), 'answer' => postdata('answer'), 'title' => postdata('title')));
 			}
 			if(postdata('question') == "") {
 				flash("error", "En tom fråga?!?!?!?!");
-				return $this->render("add", array('restore' => 1, 'episode' => postdata('episode'), 'level' => postdata('level'), 'question' => postdata('question'), 'answer' => postdata('answer')));
+				return $this->render("add", array('restore' => 1, 'episode' => postdata('episode'), 'level' => postdata('level'), 'question' => postdata('question'), 'answer' => postdata('answer'), 'title' => postdata('title')));
 			}
 			if(postdata('title') == "") {
 				flash("error", "Du måste ha en rubrik.");
-				return $this->render("add", array('restore' => 1, 'episode' => postdata('episode'), 'level' => postdata('level'), 'question' => postdata('question'), 'answer' => postdata('answer')));
+				return $this->render("add", array('restore' => 1, 'episode' => postdata('episode'), 'level' => postdata('level'), 'question' => postdata('question'), 'answer' => postdata('answer'), 'title' => postdata('title')));
             }
 			if(postdata('answer') == "") {
 				flash("error", "En fråga utan svar, är du dum eller?");
-				return $this->render("add", array('restore' => 1, 'episode' => postdata('episode'), 'level' => postdata('level'), 'question' => postdata('question'), 'answer' => postdata('answer')));
+				return $this->render("add", array('restore' => 1, 'episode' => postdata('episode'), 'level' => postdata('level'), 'question' => postdata('question'), 'answer' => postdata('answer'), 'title' => postdata('title')));
 			}
 			
 			// Check if question already exists
 			$t = NXGameQuestion::from_episode_and_level($event, postdata('episode'), postdata('level'));
 			if($t) {
 				flash("error", "Fråga ".postdata('level')." på episod ".postdata('episode')." finns redan.");
-				return $this->render("add", array('restore' => 1, 'episode' => postdata('episode'), 'level' => postdata('level'), 'question' => postdata('question'), 'answer' => postdata('answer')));
+				return $this->render("add", array('restore' => 1, 'episode' => postdata('episode'), 'level' => postdata('level'), 'question' => postdata('question'), 'answer' => postdata('answer'), 'title' => postdata('title')));
 			}
 
-			$q = new NXGameQuestion();
 
+			$q = new NXGameQuestion();
 			$q->event = $event;
 			$q->episode = postdata('episode');
 			$q->level = postdata('level');
 			$q->question = postdata('question');
-			$q->answer = postdata('answer');
             $q->title = postdata('title');
 			$q->commit();
 
-			flash("success", "Frågan har skapats.");
+            $a = new NXGameAnswer();
+            $a->ans_id = $q->id;
+            $a->answer = postdata('answer');
+            $a->commit();
+
+			flash("success", "Frågan har skapats." . $q->id);
 			throw new HTTPRedirect("/admin");
 		}
 

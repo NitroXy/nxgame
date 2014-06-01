@@ -7,18 +7,20 @@
 	Fråga: <br>
 	<textarea name="question" rows="20" cols="100"><?=$question?></textarea> <br><br>
     <input type="submit" name="updateQuestion" value="Uppdatera fråga">
+</form>
+<form action="/admin/edit/<?=$id?>" method="post">
     <br><br>
     <hr>
     <h2> Korrekta svar: </h2>
     <ul>
     <?php
-    $allanswers = explode(',',$answer);
-    foreach($allanswers as $i) {?>
-        <li> <?=$i?> 
-            <a href="/admin/remove_answer/<?=$id?>/<?=$i?>"><img src="/images/cross.png"></a></li>
+    $a = NXGameAnswer::selection(array('ans_id' => $id));
+    foreach($a as $i) {?>
+        <li> <?=$i->answer?> 
+            <a href="/admin/remove_answer/<?=$id?>/<?=$i->answer?>"><img src="/images/cross.png"></a></li>
     <?php }
     ?> 
     </ul>
-	Lägg till svar (för flera svar, separera med komma): </span><input type="text" name="answer" value=""/> <br><br>
+	Lägg till svar: <input type="text" name="answer" value=""/> <br><br>
 	<input type="submit" name="updateAnswers" value="Lägg till svar"/>
 </form>

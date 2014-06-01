@@ -3,5 +3,4 @@ CREATE TABLE `questions` (
 	`episode` INT NOT NULL,
 	`level` INT NOT NULL,
 	`question` TEXT NOT NULL,
-	`answer` TEXT NOT NULL
 );

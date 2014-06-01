@@ -2,7 +2,7 @@
 
 class LogAnswer extends BasicObject {
 	protected static function table_name() {
-		return 'answers';
+		return 'useranswers';
 	}
 }
 
