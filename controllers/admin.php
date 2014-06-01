@@ -45,7 +45,7 @@ class AdminController extends Controller {
 			flash("error", "Kunde inte hitta en fråga med id: {$id}");
 			throw new HTTPRedirect("/admin");
 		}
-        $a=NXGameAnswer::first(array('ans_id' => $id, 'answer' => $answer));
+        $a=NXGameAnswer::first(array('question_id' => $id, 'answer' => $answer));
         $a->delete();
 
         throw new HTTPRedirect("/admin/edit/$id");
@@ -98,7 +98,7 @@ class AdminController extends Controller {
                     throw new HTTPRedirect("/admin/edit/$id");
                 }
                 $a = new NXGameAnswer();
-                $a->ans_id = $q->id;
+                $a->question_id = $q->id;
                 $a->answer = postdata('answer');
                 $a->commit();   
             }
@@ -153,7 +153,7 @@ class AdminController extends Controller {
 			$q->commit();
 
             $a = new NXGameAnswer();
-            $a->ans_id = $q->id;
+            $a->question_id = $q->id;
             $a->answer = postdata('answer');
             $a->commit();
 

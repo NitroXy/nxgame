@@ -14,7 +14,7 @@
     <h2> Korrekta svar: </h2>
     <ul>
     <?php
-    $a = NXGameAnswer::selection(array('ans_id' => $id));
+    $a = NXGameAnswer::selection(array('question_id' => $id));
     foreach($a as $i) {?>
         <li> <?=$i->answer?> 
             <a href="/admin/remove_answer/<?=$id?>/<?=$i->answer?>"><img src="/images/cross.png"></a></li>

@@ -46,7 +46,7 @@ class GameController extends Controller {
 
 		$answer = mb_strtolower(trim($_POST['answer']),'UTF-8');
 		$q = NXGameQuestion::from_episode_and_level($event, $u->episode, $u->level);
-        $a = NXGameAnswer::first(array('ans_id' => $q->id, 'answer' => $answer));
+        $a = NXGameAnswer::first(array('question_id' => $q->id, 'answer' => $answer));
         if (isset($a)) {
             $correct = True;
         }
