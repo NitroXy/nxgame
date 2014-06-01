@@ -1,4 +1,4 @@
-CREATE TABLE `answers` (
+CREATE TABLE `useranswers` (
 		`id` INT PRIMARY KEY AUTO_INCREMENT,
 		`user_id` INT  NOT NULL,
 		`episode` INT  NOT NULL,
