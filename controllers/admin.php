@@ -107,7 +107,7 @@ class AdminController extends Controller {
 			throw new HTTPRedirect("/admin/edit/$id");
 		}
 
-		return $this->render("edit", array('id' => $id, 'question' => $q->question, 'episode' => $q->episode, 'level' => $q->level, 'answer' => $q->answer, 'title' => $q->title));
+		return $this->render("edit", array('id' => $id, 'question' => $q->question, 'episode' => $q->episode, 'level' => $q->level, 'title' => $q->title));
 	}
 
 	public function add() {

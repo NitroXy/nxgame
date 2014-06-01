@@ -51,7 +51,7 @@ class GameController extends Controller {
             $correct = True;
         }
 
-		AnswerLogger::Add($answer, ($answer == $q->answer));
+		AnswerLogger::Add($answer, ($answer == $a->answer));
 
 		if(!$correct) {
 			flash("error", "Du svarade fel.");

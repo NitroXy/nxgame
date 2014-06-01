@@ -1,1 +1,1 @@
-ALTER TABLE answers ADD COLUMN timestamp TIMESTAMP;
+ALTER TABLE useranswers ADD COLUMN timestamp TIMESTAMP;
