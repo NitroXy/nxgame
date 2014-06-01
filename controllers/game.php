@@ -9,9 +9,9 @@ class GameController extends Controller {
 		global $u, $event, $nxgame;
 
 		//If not started nxgame yet, both episode and level hasn't been set
-        if(!$nxgame->is_started) {
+		if(!$nxgame->is_started) {
 			return '<p>Nxgame har inte startat än.</p>';
-        }
+		}
 
 		if(!isset($u->episode) && !isset($u->level)) {
 			$u->episode = 1;
@@ -46,10 +46,10 @@ class GameController extends Controller {
 
 		$answer = mb_strtolower(trim($_POST['answer']),'UTF-8');
 		$q = NXGameQuestion::from_episode_and_level($event, $u->episode, $u->level);
-        $a = NXGameAnswer::first(array('question_id' => $q->id, 'answer' => $answer));
-        if (isset($a)) {
-            $correct = True;
-        }
+		$a = NXGameAnswer::first(array('question_id' => $q->id, 'answer' => $answer));
+		if (isset($a)) {
+			$correct = True;
+		}
 
 		AnswerLogger::Add($answer, ($answer == $a->answer));
 
@@ -89,7 +89,7 @@ class GameController extends Controller {
 		
 		//Next level
 		$u->level = $u->level + 1;
-        //$u->initqtime = date('Y:m:d H-i-s');	
+		//$u->initqtime = date('Y:m:d H-i-s');	
 		$u->commit();
 
 

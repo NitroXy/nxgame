@@ -50,8 +50,8 @@ class NXGame extends BasicObject {
 	}
 }
 class NXGameAnswer extends BasicObject {
-    protected static function table_name() {
-        return 'questionanswers';
-    }
+	protected static function table_name() {
+		return 'questionanswers';
+	}
 }
 ?>

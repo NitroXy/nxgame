@@ -19,9 +19,9 @@ body {
 #wrapper {
 	background: rgba(5, 5, 5, .75);
 	<!--[if IE]>
-        background:transparent;
-        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#75050505,endColorstr=#75050505);
-        zoom: 1;
+		background:transparent;
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#75050505,endColorstr=#75050505);
+		zoom: 1;
 	<![endif]-->
 	border: 4px solid #000;
 	width: 1000px;
@@ -36,8 +36,8 @@ body {
 }
 
 hr {
-    border-top:#cccccc 1px solid;
-    height: 1px;
+	border-top:#cccccc 1px solid;
+	height: 1px;
 }
 
 h1,h2,h3 {
@@ -53,13 +53,13 @@ a:hover {
 }
 
 #header {
-    padding-top:1;
-    margin-top:0px;
-    height:400px;
-    background-image:url(images/header.jpg);
+	padding-top:1;
+	margin-top:0px;
+	height:400px;
+	background-image:url(images/header.jpg);
 }
 #header h1{
-    	color:#121a12;
+		color:#121a12;
 	width:200px;
 }
 #header p {
@@ -119,6 +119,10 @@ a:hover {
 
 #content h2 {
 	margin-left: -5px;
+}
+#content h3 {
+	font-size:15px;
+	margin-left:5px;
 }
 
 #footer {

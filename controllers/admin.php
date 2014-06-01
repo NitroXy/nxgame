@@ -18,7 +18,7 @@ class AdminController extends Controller {
 		$nxgame->current_episode = postdata('current_episode');
 		$nxgame->final_episode = postdata('final_episode');
 		$nxgame->winner = postdata('winner');
-        $nxgame->is_started = postdata('is_started');
+		$nxgame->is_started = postdata('is_started');
 		$nxgame->commit();
 		flash("success", "Ändringarna har sparats.");
 		throw new HTTPRedirect("/admin");
@@ -32,26 +32,26 @@ class AdminController extends Controller {
 		$game->event = $event + 1;
 		$game->current_episode = 1;
 		$game->final_episode = 2;
-        $game->is_started = false;
+		$game->is_started = false;
 		$game->commit();
 
 		flash("success", "NXGame".($event + 1)." har skapats. Du behöver bara byta event i 'config.php' för att växla.");
 		throw new HTTPRedirect("/admin");
 	}
 
-    public function remove_answer($id=null, $answer=null) {
-        $q=NXGameQuestion::from_id($id);
+	public function remove_answer($id=null, $answer=null) {
+		$q=NXGameQuestion::from_id($id);
 		if(!$q) {
 			flash("error", "Kunde inte hitta en fråga med id: {$id}");
 			throw new HTTPRedirect("/admin");
 		}
-        $a=NXGameAnswer::first(array('question_id' => $id, 'answer' => $answer));
-        $a->delete();
+		$a=NXGameAnswer::first(array('question_id' => $id, 'answer' => $answer));
+		$a->delete();
 
-        throw new HTTPRedirect("/admin/edit/$id");
+		throw new HTTPRedirect("/admin/edit/$id");
 
-                
-    }
+				
+	}
 
 	public function edit($id=null) {
 		if($id == null) {
@@ -66,42 +66,40 @@ class AdminController extends Controller {
 		}
 
 		if(is_post()) {
-            //check for empty fields
-            if (isset($_POST['updateQuestion'])) {
-                if (postdata('episode' == "")) {
-                flash("error", "Fältet 'episode' är tomt");
-                throw new HTTPRedirect("/admin/edit/$id");
-                }
+			//check for empty fields
+			if (isset($_POST['updateQuestion'])) {
+				if (postdata('episode' == "")) {
+					flash("error", "Fältet 'episode' är tomt");
+					throw new HTTPRedirect("/admin/edit/$id");
+				}
+				if (postdata('level' == "")) {
+					flash("error", "Fältet 'Nivå' är tomt");
+					throw new HTTPRedirect("/admin/edit/$id");
+				}
+				if (postdata('question' == "")) {
+					flash("error", "Tomma frågor är inte nice");
+					throw new HTTPRedirect("/admin/edit/$id");
+				}
+				if (postdata('title' == "")) {
+					flash("error", "Du vill ha en rubrik.");
+					throw new HTTPRedirect("/admin/edit/$id");
+				}
+				$q->episode = postdata('episode');
+				$q->level = postdata('level');
+				$q->question = postdata('question');
+				$q->title = postdata('title');
+				$q->commit();
+			} else {
 
-                if (postdata('level' == "")) {
-                flash("error", "Fältet 'Nivå' är tomt");
-                throw new HTTPRedirect("/admin/edit/$id");
-                }
-
-                if (postdata('question' == "")) {
-                flash("error", "Tomma frågor är inte nice");
-                throw new HTTPRedirect("/admin/edit/$id");
-                }
-                if (postdata('title' == "")) {
-                flash("error", "Du vill ha en rubrik.");
-                throw new HTTPRedirect("/admin/edit/$id");
-                }
-                $q->episode = postdata('episode');
-                $q->level = postdata('level');
-                $q->question = postdata('question');
-                $q->title = postdata('title');
-                $q->commit();
-            } else {
-
-                if (postdata('answer') == "") {
-                    flash("error", "En fråga utan svar?");
-                    throw new HTTPRedirect("/admin/edit/$id");
-                }
-                $a = new NXGameAnswer();
-                $a->question_id = $q->id;
-                $a->answer = postdata('answer');
-                $a->commit();   
-            }
+				if (postdata('answer') == "") {
+					flash("error", "En fråga utan svar?");
+					throw new HTTPRedirect("/admin/edit/$id");
+				}
+				$a = new NXGameAnswer();
+				$a->question_id = $q->id;
+				$a->answer = postdata('answer');
+				$a->commit();   
+			}
 
 			flash("success", "Frågan har blivit ändrad.");
 			throw new HTTPRedirect("/admin/edit/$id");
@@ -130,7 +128,7 @@ class AdminController extends Controller {
 			if(postdata('title') == "") {
 				flash("error", "Du måste ha en rubrik.");
 				return $this->render("add", array('restore' => 1, 'episode' => postdata('episode'), 'level' => postdata('level'), 'question' => postdata('question'), 'answer' => postdata('answer'), 'title' => postdata('title')));
-            }
+			}
 			if(postdata('answer') == "") {
 				flash("error", "En fråga utan svar, är du dum eller?");
 				return $this->render("add", array('restore' => 1, 'episode' => postdata('episode'), 'level' => postdata('level'), 'question' => postdata('question'), 'answer' => postdata('answer'), 'title' => postdata('title')));
@@ -149,13 +147,13 @@ class AdminController extends Controller {
 			$q->episode = postdata('episode');
 			$q->level = postdata('level');
 			$q->question = postdata('question');
-            $q->title = postdata('title');
+			$q->title = postdata('title');
 			$q->commit();
 
-            $a = new NXGameAnswer();
-            $a->question_id = $q->id;
-            $a->answer = postdata('answer');
-            $a->commit();
+			$a = new NXGameAnswer();
+			$a->question_id = $q->id;
+			$a->answer = postdata('answer');
+			$a->commit();
 
 			flash("success", "Frågan har skapats." . $q->id);
 			throw new HTTPRedirect("/admin");
@@ -167,9 +165,9 @@ class AdminController extends Controller {
 	public function get_answers($filter = null, $arg = null) {
 		if($filter == null and $arg == null) {
 			$answers = LogAnswer::selection(array("@order" => "id:desc"));
-		} else if($filter == "name") {
+		} else if ($filter == "name") {
 			$answers = LogAnswer::selection(array("@order" => "id:desc", "user_id" => $arg));
-		} else if($filter == "limit") {
+		} else if ($filter == "limit") {
 			$answers = LogAnswer::selection(array("@order" => "id:desc", "@limit" => array(0, $arg)));
 		}
 
