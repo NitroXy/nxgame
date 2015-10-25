@@ -3,8 +3,8 @@
 class Config {
 	private static $db_host = "localhost";
 	private static $db_name = "nxgame";
-	private static $db_user = "nxgame";
-	private static $db_password = "nxgamelol";
+	private static $db_user = "";
+	private static $db_password = "";
 
 	public static function fix_database($username=null) {
 		if(is_null($username)) {
