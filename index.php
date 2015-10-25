@@ -37,6 +37,24 @@
 		$menu->AddItem("/admin", "Admin", "admin");
 	}
 
+	//Display the controller
+	try {
+		$controller = Controller::factory($path);
+		$content =  exec_controller($controller, $path);
+
+	} catch(HTTPRedirect $e){
+		//Set flash for next redirect
+		if(isset($flash)) {
+			$_SESSION['flash'] = serialize($flash);
+		}
+
+		header("Location: {$e->url}");
+		exit();
+	} catch (HTTPError $e){
+		$error =  "<h2> {$e->title()} </h2> <p> {$e->message()} </p>";
+	} catch(Exception $e){
+		$error =  "<h2> Error </h2> <p> {$e->getMessage()} </p>";
+	}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -70,26 +88,11 @@
 							?> <p class="<?=$class?>"> <?=$msg?> </p> <?
 						}
 					}
-					//Display the controller
-					try {
-						$controller = Controller::factory($path);
-						$content =  exec_controller($controller, $path);
-
-					} catch(HTTPRedirect $e){
-						//Set flash for next redirect
-						if(isset($flash)) {
-							$_SESSION['flash'] = serialize($flash);
-						}
-
-						header("Location: {$e->url}");
-						exit();
-					} catch (HTTPError $e){
-						echo "<h2> {$e->title()} </h2> <p> {$e->message()} </p>";
-					} catch(Exception $e){
-						echo "<h2> Error </h2> <p> {$e->getMessage()} </p>";
-					}
 
 					//Show content
+					if (isset($error)) {
+						echo $error;
+					}
 					echo $content;
 				?>
 			</div>
