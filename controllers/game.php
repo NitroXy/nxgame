@@ -9,8 +9,8 @@ class GameController extends Controller {
 		global $u, $event, $nxgame;
 
 		//If not started nxgame yet, both episode and level hasn't been set
-		if(!$nxgame->is_started) {
-			return '<p>Nxgame har inte startat än.</p>';
+		if(!$nxgame->is_started && $u->admin == 0) {
+			return '<p>Nxgame har inte startat än.</p>' . $u->admin;
 		}
 
 		if(!isset($u->episode) && !isset($u->level)) {
