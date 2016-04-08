@@ -1,11 +1,9 @@
 Requirements: django_cas_ng, django
 
-
-django_ca_ng's way of migrating stuff is still not updated to newest django version,
-thus, before migrating for the first time, do this:
-
-python manage.py makemigrations django_cas_ng
-
-After that, you can simply do:
+Do this:
 
 python manage.py migrate
+
+Then do this:
+
+python manage.py runserver 0.0.0.0:80 (where 0.0.0.0 is the allowed ip:s)
