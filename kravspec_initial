@@ -1,0 +1,38 @@
+==config==
+* Man ska kunna ange vem som är superadmin, så man inte manuellt behöver peta in det i databasen varje gång.
+
+==Admin==
+* Superadmin ska kunna assigna andra admins, men även kunna ändra alla andras progress i episoderna.
+* Lätt kunna ändra ordning på frågor inom en episod. Gärna med drag n drop.
+* När man gör en fråga så bör man inte ange vilket frågnummer det är, det ändrar man i slutändan enkelt med ovan spec.
+* Kunna se deltagarens svar i realtid.
+* Få notifikation om någon vunnit.
+
+==Episoder==
+* Stöd för flera episoder
+* Flera episoder ska kunna vara igång samtidigt, istället för "nuvarande episod". Dock så borde man kunna gruppera in vilka episoder som är relevanta.
+* Episoder ska kunnas startas baserat på tid, så man inte behöver göra det manuellt.
+
+==Frågor==
+* Görs med markdown eller html
+* Förhandsvisning i realtid
+* Deltagare ska kunna gå tillbaka och kolla på gamla frågor
+* När deltagare svarat rätt på frågor, ska då kunna se vilken plats hen ligger på.
+* Deltagare ska enkelt kunna se sin progress genom spelet, när hen svarat rätt på frågor. Eventuellt hur många felaktiga svar innan det blev rätt.
+* Inkludera description på hur man löser frågan. Optional att fylla i, men detta kommer användas till att generera solutionpdf senare.
+
+==Svar==
+* Varje deltagare ska ha individuell timeout tills hen kan svara igen. Antigen javascript (så som dhgame gör), eller hårdsatt timer på senast svar.
+* Varje fråga ska godta flera svar
+* Hints ska även kunna ges på vissa svar.
+
+==Hints==
+* Hints ska ge tidsbaserat, beroende på hur lång tid det tog för deltagaren att klara uppgiften
+* Eventuellt, hints ges snabbare om deltagare kommit väldigt sent till uppgiften (bero på när vinnaren klarade uppgiften?)
+*
+
+==Redovisning==
+* Grafer för hur det gått för varje deltagare under varje event vs alla andra deltagare
+* Visa vilket svar som svarat mest
+* Visa vilken person som har svarat mest
+* Enkelt kunna generera pdf/solutionpack för ett evnet

@@ -2,3 +2,5 @@
 .DS_Store*
 Icon?
 ._*
+*.pyc
+*~
