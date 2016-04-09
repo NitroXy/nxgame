@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	'django_cas_ng',
-	'main.apps.MainConfig'
+    'django_cas_ng',
+    'main.apps.MainConfig'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -121,12 +121,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 AUTHENTICATION_BACKENDS = (
-	'django.contrib.auth.backends.ModelBackend',
-	'django_cas_ng.backends.CASBackend',
+    'django.contrib.auth.backends.ModelBackend',
+    'main.backends.NXGameBackend',
 )
 
-CAS_SERVER_URL = "https://nitroxy.com/cas/"
-CAS_AUTO_CREATE_USER = True
+CAS_SERVER_URL = "https://nitroxy-master.sidvind.com/cas/"
+
+AUTH_USER_MODEL = 'main.User'
 
 STATIC_URL = '/static/'
-SESSION_COOKIE_AGE = 10 #10 seconds when testing logging in with cas
+SESSION_COOKIE_AGE = 10 # 10 seconds when testing logging in with cas
