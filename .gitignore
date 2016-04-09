@@ -4,3 +4,4 @@ Icon?
 ._*
 *.pyc
 *~
+/venv

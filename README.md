@@ -1,9 +1,15 @@
-Requirements: django_cas_ng, django
+# NXGame
 
-Do this:
+## Initial setup
 
-python manage.py migrate
+    virtualenv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    python manage.py migrate
 
-Then do this:
+## Running
 
-python manage.py runserver 0.0.0.0:80 (where 0.0.0.0 is the allowed ip:s)
+    (if not already running under virtualenv)
+    source venv/bin/activate
+
+    python manage.py runserver
