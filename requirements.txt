@@ -5,3 +5,4 @@ django-cas-ng==3.5.3
 python-cas==1.1.0
 six==1.10.0
 wsgiref==0.1.2
+psycopg2==2.6.1
