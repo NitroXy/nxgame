@@ -127,7 +127,7 @@ AUTHENTICATION_BACKENDS = (
     'main.backends.NXGameBackend',
 )
 
-CAS_SERVER_URL = "https://nitroxy-master.sidvind.com/cas/"
+CAS_SERVER_URL = "https://nitroxy.com/cas/"
 
 AUTH_USER_MODEL = 'main.User'
 
