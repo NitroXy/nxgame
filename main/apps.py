@@ -7,6 +7,3 @@ from django.dispatch import receiver
 
 class MainConfig(AppConfig):
 	name = 'main'
-
-	def ready(self):
-		import main.signals.handlers

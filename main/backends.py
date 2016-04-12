@@ -19,13 +19,16 @@ class NXGameBackend(ModelBackend):
         """Verifies CAS ticket and gets or creates User object"""
         client = get_cas_client(service_url=service)
         username, attributes, pgtiou = client.verify_ticket(ticket)
-        if not username:
+        if not (username and attributes):
             return None
         try:
             user = User.objects.get(**{User.USERNAME_FIELD: username})
             created = False
         except User.DoesNotExist:
-            user = User.objects.create_user(attributes['user_id'], username, fullname=attributes['fullname'])
+            if username in getattr(settings, 'ADMINS', []):
+                user = User.objects.create_superuser(attributes['user_id'], username, fullname=attributes['fullname'])
+            else:
+                user = User.objects.create_user(attributes['user_id'], username, fullname=attributes['fullname'])
             user.save()
             created = True
 
