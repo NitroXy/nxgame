@@ -1,0 +1,395 @@
+[
+    {
+        "model" : "main.user",
+        "pk" : 1337,
+        "fields" : {
+            "password" : "",
+            "last_login" : null,
+            "is_superuser" : false,
+            "username" : "Leetmeister",
+            "fullname" : "Pelle Svansloes",
+            "date_joined" : "2016-04-11 00:00",
+            "groups" : [
+                
+            ],
+            "user_permissions" : [
+                
+            ]
+        }
+    },
+    {
+        "model" : "main.user",
+        "pk" : 1338,
+        "fields" : {
+            "password" : "",
+            "last_login" : null,
+            "is_superuser" : false,
+            "username" : "Noobmeister",
+            "fullname" : "Arnold Hennington",
+            "date_joined" : "2016-04-11 00:00",
+            "groups" : [
+                
+            ],
+            "user_permissions" : [
+                
+            ]
+        }
+    },
+    {
+        "model" : "main.game",
+        "pk" : "nxgame21",
+        "fields" : {
+            
+        }
+    },
+    {
+        "model" : "main.game",
+        "pk" : "nxgame22",
+        "fields" : {
+            
+        }
+    },
+    {
+        "model" : "main.episode",
+        "pk" : 1,
+        "fields" : {
+            "name" : "Curry curry",
+            "game" : "nxgame21",
+            "start_time" : "2015-01-01 00:00",
+            "end_time" : "2017-01-02 00:00",
+            "is_active" : true,
+            "number" : 1
+        }
+    },
+    {
+        "model" : "main.episode",
+        "pk" : 2,
+        "fields" : {
+            "name" : "Mer curry",
+            "game" : "nxgame21",
+            "start_time" : "2015-01-02 00:00",
+            "end_time" : "2017-01-03 00:00",
+            "is_active" : true,
+            "number" : 2
+        }
+    },
+    {
+        "model" : "main.episode",
+        "pk" : 3,
+        "fields" : {
+            "name" : "Kaffe",
+            "game" : "nxgame22",
+            "start_time" : "2016-01-01 00:00",
+            "end_time" : "2017-01-02 00:00",
+            "is_active" : true,
+            "number" : 1
+        }
+    },
+    {
+        "model" : "main.episode",
+        "pk" : 4,
+        "fields" : {
+            "name" : "Te",
+            "game" : "nxgame22",
+            "start_time" : "2016-01-03 00:00",
+            "end_time" : "2017-01-04 00:00",
+            "is_active" : true,
+            "number" : 2
+        }
+    },
+    {
+        "model" : "main.question",
+        "pk" : 1,
+        "fields" : {
+            "episode" : 1,
+            "number" : 1,
+            "title" : "asdf",
+            "question" : "Svaret är ettett"
+        }
+    },
+    {
+        "model" : "main.question",
+        "pk" : 2,
+        "fields" : {
+            "episode" : 1,
+            "number" : 2,
+            "title" : "asdf",
+            "question" : "Svaret är etttvå"
+        }
+    },
+    {
+        "model" : "main.question",
+        "pk" : 3,
+        "fields" : {
+            "episode" : 2,
+            "number" : 1,
+            "title" : "asdf",
+            "question" : "Svaret är tvåett"
+        }
+    },
+    {
+        "model" : "main.question",
+        "pk" : 4,
+        "fields" : {
+            "episode" : 3,
+            "number" : 1,
+            "title" : "asdf",
+            "question" : "Svaret är treett"
+        }
+    },
+    {
+        "model" : "main.question",
+        "pk" : 5,
+        "fields" : {
+            "episode" : 3,
+            "number" : 2,
+            "title" : "asdf",
+            "question" : "Svaret är tretvå"
+        }
+    },
+    {
+        "model" : "main.question",
+        "pk" : 6,
+        "fields" : {
+            "episode" : 4,
+            "number" : 1,
+            "title" : "asdf",
+            "question" : "Svaret är fyraett"
+        }
+    },
+    {
+        "model" : "main.user_episode",
+        "pk" : 1,
+        "fields" : {
+            "user" : 1337,
+            "episode" : 1,
+            "current_question" : 2,
+            "finished" : true,
+            "finish_time" : "2016-02-03 00:00"
+        }
+    },
+    {
+        "model" : "main.user_episode",
+        "pk" : 2,
+        "fields" : {
+            "user" : 1337,
+            "episode" : 2,
+            "current_question" : 1,
+            "finished" : true,
+            "finish_time" : "2016-02-04 00:00"
+        }
+    },
+    {
+        "model" : "main.user_episode",
+        "pk" : 3,
+        "fields" : {
+            "user" : 1337,
+            "episode" : 3,
+            "current_question" : 2,
+            "finished" : true,
+            "finish_time" : "2016-01-22 00:00"
+        }
+    },
+    {
+        "model" : "main.user_episode",
+        "pk" : 4,
+        "fields" : {
+            "user" : 1337,
+            "episode" : 4,
+            "current_question" : 1,
+            "finished" : false,
+            "finish_time" : null
+        }
+    },
+    {
+        "model" : "main.user_episode",
+        "pk" : 5,
+        "fields" : {
+            "user" : 1338,
+            "episode" : 3,
+            "current_question" : 1,
+            "finished" : false,
+            "finish_time" : null
+        }
+    },
+    {
+        "model" : "main.headstart",
+        "pk" : 1,
+        "fields" : {
+            "user" : 1338,
+            "episode" : 4,
+            "headstart" : 300
+        }
+    },
+    {
+        "model" : "main.timehint",
+        "pk" : 1,
+        "fields" : {
+            "question" : 3,
+            "hint" : "Har du inte klarat den än?",
+            "delay" : 60
+        }
+    },
+    {
+        "model" : "main.finish_time",
+        "pk" : 1,
+        "fields" : {
+            "user" : 1337,
+            "question" : 1,
+            "finish_time" : "2016-02-02 15:00"
+        }
+    },
+    {
+        "model" : "main.finish_time",
+        "pk" : 2,
+        "fields" : {
+            "user" : 1337,
+            "question" : 2,
+            "finish_time" : "2016-02-03 00:00"
+        }
+    },
+    {
+        "model" : "main.finish_time",
+        "pk" : 3,
+        "fields" : {
+            "user" : 1337,
+            "question" : 3,
+            "finish_time" : "2016-02-04 00:00"
+        }
+    },
+    {
+        "model" : "main.finish_time",
+        "pk" : 4,
+        "fields" : {
+            "user" : 1337,
+            "question" : 4,
+            "finish_time" : "2016-01-21 20:00"
+        }
+    },
+    {
+        "model" : "main.finish_time",
+        "pk" : 5,
+        "fields" : {
+            "user" : 1337,
+            "question" : 5,
+            "finish_time" : "2016-01-22 00:00"
+        }
+    },
+    {
+        "model" : "main.question_answer",
+        "pk" : 1,
+        "fields" : {
+            "question" : 1,
+            "answer" : "ettett"
+        }
+    },
+    {
+        "model" : "main.question_answer",
+        "pk" : 2,
+        "fields" : {
+            "question" : 2,
+            "answer" : "etttvå"
+        }
+    },
+    {
+        "model" : "main.question_answer",
+        "pk" : 3,
+        "fields" : {
+            "question" : 3,
+            "answer" : "tvåett"
+        }
+    },
+    {
+        "model" : "main.question_answer",
+        "pk" : 4,
+        "fields" : {
+            "question" : 4,
+            "answer" : "treett"
+        }
+    },
+    {
+        "model" : "main.question_answer",
+        "pk" : 5,
+        "fields" : {
+            "question" : 5,
+            "answer" : "tretvå"
+        }
+    },
+    {
+        "model" : "main.question_answer",
+        "pk" : 6,
+        "fields" : {
+            "question" : 6,
+            "answer" : "fyraett"
+        }
+    },
+    {
+        "model" : "main.question_reply",
+        "pk" : 1,
+        "fields" : {
+            "question" : 1,
+            "trigger" : "reply",
+            "reply" : "echo, echo, echo...."
+        }
+    },
+    {
+        "model" : "main.user_answer",
+        "pk" : 1, 
+        "fields" : {
+            "user" : 1337,
+            "question" : 1,
+            "answer" : "Ankan1",
+            "time" : "2016-02-01 00:00"
+        }
+    },
+    {
+        "model" : "main.user_answer",
+        "pk" : 2, 
+        "fields" : {
+            "user" : 1337,
+            "question" : 1,
+            "answer" : "Ankan2",
+            "time" : "2016-02-01 00:01"
+        }
+    },
+    {
+        "model" : "main.user_answer",
+        "pk" : 3, 
+        "fields" : {
+            "user" : 1337,
+            "question" : 1,
+            "answer" : "Ankan3",
+            "time" : "2016-02-01 00:02"
+        }
+    },
+    {
+        "model" : "main.user_answer",
+        "pk" : 4, 
+        "fields" : {
+            "user" : 1337,
+            "question" : 1,
+            "answer" : "Ankan4",
+            "time" : "2016-02-01 00:03"
+        }
+    },
+    {
+        "model" : "main.user_answer",
+        "pk" : 5, 
+        "fields" : {
+            "user" : 1337,
+            "question" : 1,
+            "answer" : "Ankan5",
+            "time" : "2016-02-01 00:04"
+        }
+    },
+    {
+        "model" : "main.user_answer",
+        "pk" : 6, 
+        "fields" : {
+            "user" : 1337,
+            "question" : 1,
+            "answer" : "Ankan6",
+            "time" : "2016-02-01 00:05"
+        }
+    }
+]
