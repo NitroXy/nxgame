@@ -1,5 +1,8 @@
 {% extends "main/base.html" %}
 {% load staticfiles %}  
 {% block content %}
-    <p> Not authorized. Tried <a href="/login"´>logging in?</a> </p>
+{% if title %}
+    <h1> {{ title }} </h1>
+{% endif %}
+{{ question }}
 {% endblock %}

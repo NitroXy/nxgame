@@ -1,0 +1,35 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="{% static 'main/main.css' %}"/>
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100, 300, 400|Roboto">
+		<title>NXGame</title>
+	</head>
+	<body>
+		<header class="container group header"> 
+			<nav class="nav">
+				<ul>
+					{% block nav %}
+                    <li><a href="/">Startsida</a></li>
+                    <li><a href="/rules">Regler & info</a></li>
+                    <li><a href="/tutorial">Tutorial</a></li>
+                    <li><a href="/game">Spela här</a></li>
+                    {% if user.is_superuser %}
+                        <li><a href="/admin">Admin</a></li>
+                    {% endif %}
+					{% endblock %}
+				</ul>
+			</nav>
+		</header>
+		<section class="container main group">
+			{% block content %}
+				<p> Legget </p>
+			{% endblock  %}
+		</section>
+		<footer class="container group footer">
+            <p>Sidan är gjord av Ankan</p>
+		</footer>
+	</body>
+</html>
