@@ -128,8 +128,11 @@ AUTHENTICATION_BACKENDS = (
 )
 
 CAS_SERVER_URL = "https://nitroxy.com/cas/"
+CAS_LOGIN_MSG = None
 
 AUTH_USER_MODEL = 'main.User'
 
 STATIC_URL = '/static/'
-SESSION_COOKIE_AGE = 10 # 10 seconds when testing logging in with cas
+SESSION_COOKIE_AGE = 3600
+
+ADMINS = ["Ankaan", "ninja"]
