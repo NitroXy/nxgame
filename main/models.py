@@ -1,3 +1,4 @@
+# encoding: utf-8
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -21,9 +22,7 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, id, username, fullname, **extra_fields):
         extra_fields.setdefault('is_superuser', True)
-
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
+        extra_fields.setdefault('is_staff', True)
 
         return self._create_user(id, username, fullname, **extra_fields)
 
@@ -34,10 +33,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         unique=True,
     )
     fullname = models.CharField(_('fullname'), max_length=100)
-    date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
+    is_staff = models.BooleanField(default=False)
+    date_joined = models.DateTimeField(_('date joined'), default=timezone.now())
 
     objects = UserManager()
 
+    # Needed by django.contrib.auth
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = [id, username, fullname]
 
@@ -45,8 +46,18 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = _('user')
         verbose_name_plural = _('users')
 
+    # Needed by the admin interface
+    def get_short_name(self):
+        return self.fullname
+
+    def get_full_name(self):
+        return self.fullname
+
 class Game(models.Model):
     name = models.CharField(max_length=128, primary_key=True)
+
+    def __unicode__(self):
+        return u'%s' % self.name
 
 class Episode(models.Model):
     name = models.CharField(max_length=128)
@@ -58,6 +69,9 @@ class Episode(models.Model):
 
     class Meta:
         unique_together = ('name', 'number')
+
+    def __unicode__(self):
+        return u'%s: %s: %s' % (self.game, self.number, self.name)
 
 class User_episode(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -77,6 +91,9 @@ class Question(models.Model):
 
     class Meta:
         unique_together = ('episode', 'number')
+
+    def __unicode__(self):
+        return u'Fråga %s: %s' % (self.number, self.title)
 
 class Headstart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -121,4 +138,4 @@ class User_answer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.CharField(max_length=256)
-    time = models.DateTimeField(default=timezone.now)
+    time = models.DateTimeField(default=timezone.now())
