@@ -69,9 +69,10 @@ class Episode(models.Model):
 
     class Meta:
         unique_together = ('name', 'number')
+        ordering = ['game', 'number']
 
     def __unicode__(self):
-        return u'%s: %s: %s' % (self.game, self.number, self.name)
+        return u'%s: %s' % (self.number, self.name)
 
 class User_episode(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -91,6 +92,7 @@ class Question(models.Model):
 
     class Meta:
         unique_together = ('episode', 'number')
+        ordering = ['episode', 'number']
 
     def __unicode__(self):
         return u'Fråga %s: %s' % (self.number, self.title)
