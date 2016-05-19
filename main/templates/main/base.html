@@ -4,18 +4,19 @@
 	<head>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="{% static 'main/main.css' %}"/>
-		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100, 300, 400|Roboto">
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100, 300, 400|Roboto|Raleway">
 		<title>NXGame</title>
 	</head>
 	<body>
-		<header class="container group header"> 
+		<header class="header group"> 
+            <img class="logo" src={% static 'main/img/nxgamelogo.png' %}>
 			<nav class="nav">
 				<ul>
 					{% block nav %}
-                    <li><a href="/">Startsida</a></li>
-                    <li><a href="/rules">Regler & info</a></li>
-                    <li><a href="/tutorial">Tutorial</a></li>
-                    <li><a href="/game">Spela här</a></li>
+                    <a href="/"><li>Startsida</li></a>
+                    <a href="/rules"><li>Regler & info</li></a>
+                    <a href="/game"><li>Spela här</li></a>
+                    <a href="/tutorial"><li>Tutorial</li></a>
                     {% if user.is_superuser %}
                         <li><a href="/admin">Admin</a></li>
                     {% endif %}
@@ -29,7 +30,7 @@
 			{% endblock  %}
 		</section>
 		<footer class="container group footer">
-            <p>Sidan är gjord av Ankan</p>
+            <p>Sidan är gjord av Ankan och Elon</p>
 		</footer>
 	</body>
 </html>

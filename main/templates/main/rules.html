@@ -1,12 +1,8 @@
 {% extends "main/base.html" %}
 {% load staticfiles %}  
-{% block content %}
-    <p> Not authorized. Tried <a href="/login"´>logging in?</a> </p>
-{% endblock %}
-
 {% block nav %}
-    <a href="/"><li class="selected">Startsida</li></a>
-    <a href="/rules"><li>Regler & info</li></a>
+    <a href="/"><li>Startsida</li></a>
+    <a href="/rules"><li class="selected">Regler & info</li></a>
     <a href="/tutorial"><li>Tutorial</li></a>
     <a href="/game"><li>Spela här</li></a>
     {% if user.is_superuser %}

@@ -1,8 +1,28 @@
 {% extends "main/base.html" %}
 {% load staticfiles %}  
 {% block content %}
+{% if game %}
+    <h1> {{ game }} </h1>
+{% endif %}
+{% if active_games %}
+    <ul>
+    {% for g in active_games %}
+        <li>{{ g.name }} </li>
+    {% endfor %}
+    </ul>
+{% endif %}
 {% if title %}
     <h1> {{ title }} </h1>
 {% endif %}
 {{ question }}
+{% endblock %}
+
+{% block nav %}
+    <a href="/"><li>Startsida</li></a>
+    <a href="/rules"><li>Regler & info</li></a>
+    <a href="/tutorial"><li>Tutorial</li></a>
+    <a href="/game"><li class="selected">Spela här</li></a>
+    {% if user.is_superuser %}
+        <li><a href="/admin">Admin</a></li>
+    {% endif %}
 {% endblock %}
