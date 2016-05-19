@@ -3,8 +3,9 @@
 {% block nav %}
     <a href="/"><li>Startsida</li></a>
     <a href="/rules"><li class="selected">Regler & info</li></a>
-    <a href="/tutorial"><li>Tutorial</li></a>
     <a href="/game"><li>Spela här</li></a>
+    <a href="/tutorial"><li>Tutorial</li></a>
+    <a href="/old"><li>Gamla games</li></a>
     {% if user.is_superuser %}
         <li><a href="/admin">Admin</a></li>
     {% endif %}

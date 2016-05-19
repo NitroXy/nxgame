@@ -23,6 +23,9 @@ def tutorial(request):
 def rules(request):
     return render(request, 'main/rules.html')
 
+def old(request):
+    return render(request, 'main/old.html')
+
 
 # This might not belong here. But yeah, keep it here at the moment.
 def check_auth(request):
