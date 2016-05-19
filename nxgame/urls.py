@@ -18,14 +18,10 @@ from django.contrib import admin
 from django_cas_ng.views import login, logout, callback
 
 urlpatterns = [
-    url(r'^', include('main.urls')),
-	]
-
-
-urlpatterns = [
+    url(r'^admin/login', 'main.views.check_auth'),
     url(r'^admin/', admin.site.urls),
-	url(r'^login/', login, name='login'),
-	url(r'^logout/', logout, name='logout'),
-	url(r'^callback$', callback, name='cas_ng_proxy_callback'),
-	url(r'^', include('main.urls'))
+    url(r'^login/', login, name='login'),
+    url(r'^logout/', logout, name='logout'),
+    url(r'^callback$', callback, name='cas_ng_proxy_callback'),
+    url(r'^', include('main.urls'))
 ]
