@@ -4,17 +4,24 @@
 {% if game %}
     <h1> {{ game }} </h1>
 {% endif %}
-{% if active_games %}
+{% if game %}
+    <h1> {{ game }} </h1>
+{% endif %}
+{% if question.title %}
+    <h1> {{ question.title }} </h1>
+{% endif %}
+{{ question.question }}
+{% if message %}
+    message: {{ message }}
+{% endif %}
+
+{% if hints %}
     <ul>
-    {% for g in active_games %}
-        <li>{{ g.name }} </li>
+    {% for h in hints %}
+        <li>hint: {{ h.hint}} </li>
     {% endfor %}
     </ul>
 {% endif %}
-{% if title %}
-    <h1> {{ title }} </h1>
-{% endif %}
-{{ question }}
 {% endblock %}
 
 {% block nav %}
