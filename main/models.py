@@ -91,7 +91,7 @@ class Episode(BaseModel):
 
     def can_play(self, headstart=0):
         headstart = timedelta(seconds=headstart)
-        return self.start_time < timezone.now() - headstart < self.end_time
+        return self.start_time < timezone.now() + headstart < self.end_time + headstart
 
 class User_episode(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
