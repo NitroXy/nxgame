@@ -4,6 +4,19 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
+from django.core.exceptions import ObjectDoesNotExist
+
+class BaseManager(models.Manager):
+    def get_or_none(self, **kwargs):
+        try:
+            return self.get(**kwargs)
+        except ObjectDoesNotExist:
+            return []
+
+class BaseModel(models.Model):
+    objects = BaseManager()
+    class Meta:
+        abstract=True
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -53,19 +66,20 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_full_name(self):
         return self.fullname
 
-class Game(models.Model):
+class Game(BaseModel):
     name = models.CharField(max_length=128, primary_key=True)
 
     def __unicode__(self):
         return u'%s' % self.name
 
-class Episode(models.Model):
+class Episode(BaseModel):
     name = models.CharField(max_length=128)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField(null=True)
     is_active = models.BooleanField(default=True)
     number = models.IntegerField()
+    people = models.ManyToManyField(User, through='User_episode')
 
     class Meta:
         unique_together = ('name', 'number')
@@ -74,7 +88,7 @@ class Episode(models.Model):
     def __unicode__(self):
         return u'%s: %s' % (self.number, self.name)
 
-class User_episode(models.Model):
+class User_episode(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
     current_question = models.IntegerField(default=1)
@@ -84,7 +98,7 @@ class User_episode(models.Model):
     class Meta:
         unique_together = ('user', 'episode')
 
-class Question(models.Model):
+class Question(BaseModel):
     episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
     number = models.IntegerField()
     title = models.CharField(max_length=128)
@@ -97,7 +111,7 @@ class Question(models.Model):
     def __unicode__(self):
         return u'Fråga %s: %s' % (self.number, self.title)
 
-class Headstart(models.Model):
+class Headstart(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
     headstart = models.IntegerField()
@@ -105,7 +119,7 @@ class Headstart(models.Model):
     class Meta:
         unique_together = ('user', 'episode', 'headstart')
 
-class Timehint(models.Model):
+class Timehint(BaseModel):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     hint = models.CharField(max_length=256)
     delay = models.IntegerField()
@@ -113,7 +127,7 @@ class Timehint(models.Model):
     class Meta:
         unique_together = ('question', 'delay')
 
-class Finish_time(models.Model):
+class Finish_time(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     finish_time = models.DateTimeField()
@@ -121,14 +135,14 @@ class Finish_time(models.Model):
     class Meta:
         unique_together = ('user', 'question')
 
-class Question_answer(models.Model):
+class Question_answer(BaseModel):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.CharField(max_length=256)
 
     class Meta:
         unique_together = ('question', 'answer')
 
-class Question_reply(models.Model):
+class Question_reply(BaseModel):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     trigger = models.CharField(max_length=256)
     reply = models.CharField(max_length=256)
@@ -136,7 +150,7 @@ class Question_reply(models.Model):
     class Meta:
         unique_together = ('question', 'reply')
 
-class User_answer(models.Model):
+class User_answer(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.CharField(max_length=256)
