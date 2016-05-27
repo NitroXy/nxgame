@@ -7,6 +7,6 @@
     <a href="/tutorial"><li>Tutorial</li></a>
     <a href="/old"><li>Gamla games</li></a>
     {% if user.is_superuser %}
-        <li><a href="/admin">Admin</a></li>
+        <a href="/admin"><li>Admin</li></a>
     {% endif %}
 {% endblock %}
