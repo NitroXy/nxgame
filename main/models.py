@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 from django.core.exceptions import ObjectDoesNotExist
+from datetime import timedelta
 
 class BaseManager(models.Manager):
     def get_or_none(self, **kwargs):
@@ -88,6 +89,10 @@ class Episode(BaseModel):
     def __unicode__(self):
         return u'%s: %s' % (self.number, self.name)
 
+    def can_play(self, headstart=0):
+        headstart = timedelta(seconds=headstart)
+        return self.start_time < timezone.now() - headstart < self.end_time
+
 class User_episode(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
@@ -95,14 +100,22 @@ class User_episode(BaseModel):
     finished = models.BooleanField(default=False)
     finish_time = models.DateTimeField(null=True) # Might be redundant to have, since we already will have finish time for each question.
 
+    def finish_place(self):
+        betters = User_episode.objects.filter(episode=self.episode, finish_time__lt=self.finish_time)
+        return len(betters) + 1
+
     class Meta:
         unique_together = ('user', 'episode')
+
+    def __unicode__(self):
+        return u'User: %s, episode: %s' % (self.user, self.episode)
 
 class Question(BaseModel):
     episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
     number = models.IntegerField()
     title = models.CharField(max_length=128)
     question = models.CharField(max_length=2048)
+    users = models.ManyToManyField(User, through='User_question')
 
     class Meta:
         unique_together = ('episode', 'number')
@@ -110,6 +123,14 @@ class Question(BaseModel):
 
     def __unicode__(self):
         return u'Fråga %s: %s' % (self.number, self.title)
+
+class User_question(BaseModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    start_time = models.DateTimeField(default=timezone.now())
+
+    def __unicode__(self):
+        return u'User: %s, question: %s' % (self.user, self.question)
 
 class Headstart(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
