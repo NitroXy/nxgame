@@ -101,8 +101,8 @@ class User_episode(BaseModel):
     finish_time = models.DateTimeField(null=True) # Might be redundant to have, since we already will have finish time for each question.
 
     def finish_place(self):
-        betters = User_episode.objects.filter(episode=self.episode, finish_time__lt=self.finish_time)
-        return len(betters) + 1
+        users_ahead = User_episode.objects.filter(episode=self.episode, finish_time__lt=self.finish_time)
+        return len(users_ahead) + 1
 
     class Meta:
         unique_together = ('user', 'episode')
