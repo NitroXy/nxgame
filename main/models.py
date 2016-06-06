@@ -150,7 +150,12 @@ class User_episode(BaseModel):
             self.finished = True
             self.finish_time = timezone.now()
         else:
-
+            user_question = User_question.objects.get(
+                question=Question.objects.get(episode=self.episode, number=self.current_question),
+                user=self.user
+            )
+            user_question.finish_time = timezone.now()
+            user_question.save()
             self.current_question += 1
         self.save()
 
@@ -179,6 +184,7 @@ class User_question(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     start_time = models.DateTimeField(default=timezone.now)
+    finish_time = models.DateTimeField(null=True)
 
     def __unicode__(self):
         return u'User: %s, question: %s' % (self.user, self.question)
@@ -198,14 +204,6 @@ class Timehint(BaseModel):
 
     class Meta:
         unique_together = ('question', 'delay')
-
-class Finish_time(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    finish_time = models.DateTimeField()
-
-    class Meta:
-        unique_together = ('user', 'question')
 
 class Question_answer(BaseModel):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
