@@ -139,6 +139,8 @@ AUTH_USER_MODEL = 'main.User'
 
 STATIC_URL = '/static/'
 # STATIC_ROOT = '/path/to/put/collectstatic/'
+
 SESSION_COOKIE_AGE = 3600
+SESSION_SAVE_EVERY_REQUEST = True
 
 ADMINS = []
