@@ -12,6 +12,8 @@
 
     Create user and database as specified in your settings.py
 
+### Configure Django 
+    mv /nxgame/settings.py.sample /nxgame/settings.py
 
 ### Set up the python environment and packages
     virtualenv venv

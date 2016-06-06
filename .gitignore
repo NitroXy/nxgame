@@ -5,3 +5,4 @@ Icon?
 *.pyc
 *~
 /venv
+/nxgame/settings.py
