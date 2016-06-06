@@ -49,7 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     fullname = models.CharField(_('fullname'), max_length=100)
     is_staff = models.BooleanField(default=False)
-    date_joined = models.DateTimeField(_('date joined'), default=timezone.now())
+    date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
     objects = UserManager()
 
@@ -150,6 +150,7 @@ class User_episode(BaseModel):
             self.finished = True
             self.finish_time = timezone.now()
         else:
+
             self.current_question += 1
         self.save()
 
@@ -177,7 +178,7 @@ class Question(BaseModel):
 class User_question(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    start_time = models.DateTimeField(default=timezone.now())
+    start_time = models.DateTimeField(default=timezone.now)
 
     def __unicode__(self):
         return u'User: %s, question: %s' % (self.user, self.question)
@@ -238,4 +239,4 @@ class User_answer(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.CharField(max_length=256)
-    time = models.DateTimeField(default=timezone.now())
+    time = models.DateTimeField(default=timezone.now)

@@ -38,7 +38,6 @@ def game(request):
         user_question, _ = User_question.objects.get_or_create(
             user=request.user,
             question=question,
-            start_time=timezone.now()
         )
 
         hints = Timehint.objects.filter(
