@@ -1,19 +1,18 @@
 {% extends "main/base.html" %}
 {% load staticfiles %}  
 {% block content %}
-{% if game %}
-    <h1> {{ game }} </h1>
+
+{% if messages %}
+    {% for message in messages %}
+        message: {{ message }}
+    {% endfor %}
 {% endif %}
-{% if game %}
-    <h1> {{ game }} </h1>
-{% endif %}
+
 {% if question.title %}
-    <h1> {{ question.title }} </h1>
+    <h1><img src="{% static 'main/img/ast.png' %}">{{ question.title }}<img src="{% static 'main/img/ast.png' %}"></h1>
 {% endif %}
+
 {{ question.question }}
-{% if message %}
-    message: {{ message }}
-{% endif %}
 
 {% if hints %}
     <ul>
@@ -22,6 +21,15 @@
     {% endfor %}
     </ul>
 {% endif %}
+
+{% if question %}
+    <form action="/game/" method="post">
+        {% csrf_token %}
+        <input name="user-answer" type="text">
+        <input type="submit" value="Svara">
+    </form>
+{% endif %}
+
 {% endblock %}
 
 {% block nav %}

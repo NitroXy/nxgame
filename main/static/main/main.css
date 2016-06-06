@@ -62,7 +62,6 @@ a {
 a:hover {
     color: white;
 }
-
 .nav ul {
     padding: 0;
     font-family: Raleway;
@@ -107,4 +106,18 @@ a:hover {
 .footer {
     font-size: 10px;
     text-align: right;
+}
+
+h1 {
+    font-family: Open Sans;
+    font-size: 40px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    vertical-align: top;
+}
+
+h1 > img {
+    width: 32px;
+    margin: 0 10px;
 }
