@@ -80,6 +80,9 @@ def tutorial(request):
 def rules(request):
     return render(request, 'main/rules.html')
 
+def profile(request):
+    return render(request, 'main/profile.html')
+
 def old(request):
     return render(request, 'main/old.html')
 

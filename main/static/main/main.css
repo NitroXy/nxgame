@@ -54,14 +54,6 @@ body {
     *zoom: 1;
 }
 
-a {
-    color:inherit;
-    transition: all 1s;
-}
-
-a:hover {
-    color: white;
-}
 .nav ul {
     padding: 0;
     font-family: Raleway;
@@ -73,12 +65,23 @@ a:hover {
     text-align: center;
     list-style: none;
 }
+
 .nav li {
     display: inline;
+}
+
+.nav a {
+    display: inline-block;
     padding: 10px 22px;
     margin: 5px;
     border: 1px solid #ebebeb;
     border-radius: 5px;
+}
+
+@media all and (max-width: 800px) {
+    .nav a {
+        display: block;
+    }
 }
 
 .selected {
@@ -94,6 +97,7 @@ a:hover {
     background-image: url("/static/main/img/nxgameheader.png");
     margin-bottom: 3px;
 }
+
 .logo {
     width: 50%;
     display: block;

@@ -5,12 +5,13 @@
 {% endblock %}
 
 {% block nav %}
-    <a href="/"><li class="selected">Startsida</li></a>
-    <a href="/rules"><li>Regler & info</li></a>
-    <a href="/game"><li>Spela här</li></a>
-    <a href="/tutorial"><li>Tutorial</li></a>
-    <a href="/old"><li>Gamla games</li></a>
+    <li><a class="selected" href="/">Startsida</a></li>
+    <li><a href="/rules">Regler & info</a></li>
+    <li><a href="/game">Spela här</a></li>
+    <li><a href="/tutorial">Tutorial</a></li>
+    <li><a href="/profile">Profil</a></li>
+    <li><a href="/old">Gamla games</a></li>
     {% if user.is_superuser %}
-        <a href="/admin"><li>Admin</li></a>
+        <li><a href="/admin">Admin</a></li>
     {% endif %}
 {% endblock %}
