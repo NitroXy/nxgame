@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
+from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import timedelta
 
@@ -89,26 +90,75 @@ class Episode(BaseModel):
     def __unicode__(self):
         return u'%s: %s' % (self.number, self.name)
 
-    def can_play(self, headstart=0):
-        headstart = timedelta(seconds=headstart)
-        return self.start_time < timezone.now() + headstart < self.end_time + headstart
 
 class User_episode(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
     current_question = models.IntegerField(default=1)
     finished = models.BooleanField(default=False)
-    finish_time = models.DateTimeField(null=True) # Might be redundant to have, since we already will have finish time for each question.
+    finish_time = models.DateTimeField(null=True) # Might be redundant to have,
+                                                  # since we already will have finish time for each question.
 
     def finish_place(self):
         users_ahead = User_episode.objects.filter(episode=self.episode, finish_time__lt=self.finish_time)
         return len(users_ahead) + 1
 
+    def playable(self, request):
+        """Checks whether the gives user in the request can play or not."""
+        headstart = Headstart.objects.get_or_none(user=request.user, episode=self.episode)
+        headstart = timedelta(seconds=headstart.headstart if headstart else 0)
+
+        can_play = self.episode.start_time < timezone.now() + headstart < self.episode.end_time + headstart
+        if not can_play:
+            messages.add_message(
+                request,
+                messages.INFO, 'Episode %s har inte startat än. Den startar %s.' %
+                    current_episode.number,
+                    current_episode.start_time.strftime("%d %B klockan %H:%M.%S"))
+            if headstart:
+                messages.add_message(
+                    request,
+                    messages.INFO,
+                    "Eftersom du har ett försprång så startar du klockan %s" %
+                        (current_episode.start_time - timedelta(seconds=headstart.headstart))
+                            .strftime("%H:%M.%S")
+                )
+        return can_play
+
     class Meta:
         unique_together = ('user', 'episode')
 
+    @staticmethod
+    def get_unfinished_episode(request, episodes):
+        for e in episodes:
+            candidate, _ = User_episode.objects.get_or_create(user=request.user, episode=e)
+            if not candidate.finished:
+                return candidate
+        # Since the last episode available was finished, nxgame is complete for the user
+        messages.add_message(
+            request,
+            messages.INFO,
+            "Du har klarat av nxgame! Du kom på plats %s" % candidate.finish_place()
+        )
+        return False
+
+    def make_progress(self):
+        max_question_number = Question.objects.filter(
+            episode=self.episode
+            ).aggregate(models.Max('number')).values()[0]
+        if self.current_question == max_question_number:
+            self.finished = True
+            self.finish_time = timezone.now()
+        else:
+            self.current_question += 1
+        self.save()
+
     def __unicode__(self):
         return u'User: %s, episode: %s' % (self.user, self.episode)
+
+    class Meta:
+        unique_together = ('user', 'episode')
+
 
 class Question(BaseModel):
     episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
@@ -160,6 +210,11 @@ class Question_answer(BaseModel):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.CharField(max_length=256)
 
+    @staticmethod
+    def get_all_answers(question):
+        answers = Question_answer.objects.filter(question=question)
+        return [x.answer for x in answers]
+
     class Meta:
         unique_together = ('question', 'answer')
 
@@ -167,6 +222,14 @@ class Question_reply(BaseModel):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     trigger = models.CharField(max_length=256)
     reply = models.CharField(max_length=256)
+
+    @staticmethod
+    def get_all_triggers_and_replies(question):
+        reply_objects = Question_reply.objects.filter(question=question)
+        trigger_replies = {}
+        for o in reply_objects:
+            trigger_replies[o.trigger] = o.reply
+        return trigger_replies
 
     class Meta:
         unique_together = ('question', 'reply')

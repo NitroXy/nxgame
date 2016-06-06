@@ -1,6 +1,7 @@
 # encoding: utf-8
 from os import listdir, path
 from django.template import loader
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -9,52 +10,63 @@ from .models import *
 from datetime import timedelta
 
 @login_required
-def game(request, curr_game):
-    template = 'main/game.html'
+def game(request):
+    game_template = 'main/game.html'
+
+    active_game = Game.objects.get(name='nxgame21') # Temporary, get this from database later
+    game_episodes = Episode.objects.filter(game=active_game)
+
+    if not game_episodes:
+        messages.add_message(
+            request,
+            messages.WARNING,
+            "Nxgame har inte startat än"
+        )
+        return render(request, game_template)
+
+    unfinished_episode = User_episode.get_unfinished_episode(request, game_episodes)
+
+    if not unfinished_episode or not unfinished_episode.playable(request):
+        return render(request, game_template)
+
+    question = Question.objects.get_or_none(
+        episode=unfinished_episode.episode,
+        number=unfinished_episode.current_question
+    )
 
     if request.method == "GET":
-        active_game = Game.objects.get(name='nxgame21') # Temporary, get this from database later
+        user_question, _ = User_question.objects.get_or_create(
+            user=request.user,
+            question=question,
+            start_time=timezone.now()
+        )
 
-        active_episodes = Episode.objects.filter(game=active_game, is_active=True)
-
-        if not active_episodes:
-            return render(request, template, {'message' : "Nxgame har inte startat yet" })
-
-        for e in active_episodes:
-            # Check if episode has started
-            headstart = Headstart.objects.get_or_none(user=request.user, episode=e)
-            if not e.can_play(headstart.headstart if headstart else 0):
-                message = 'Episode %s har inte startat än. Den startar %s.' %\
-                        (e.number, e.start_time.strftime("%d %B klockan %H:%M.%S"))
-                if headstart:
-                    message += " Eftersom du har ett försprång så startar du klockan %s" %\
-                            (e.start_time - timedelta(seconds=headstart.headstart)).strftime("%H:%M.%S")
-                return render(request, template, {'message' : message})
-
-            # Add initial user-episode-data if user has not played the episode before
-            user_episode = User_episode.objects.get_or_none(user=request.user, episode=e)
-            if not user_episode:
-                user_episode = User_episode(user=request.user, episode=e)
-                user_episode.save()
-
-            if not user_episode.finished:
-                question = Question.objects.get_or_none(episode=e, number=user_episode.current_question)
-                user_question = User_question.objects.get_or_none(user=request.user, question=question)
-                if not user_question:
-                    user_question = User_question(user=request.user, question=question)
-                    user_question.save()
-                timehints = Timehint.objects.filter(
-                        question=question,
-                        delay__lt=(timezone.now() - user_question.start_time).total_seconds())
-                return render(request, 'main/game.html',
-                        {'game' : curr_game, 'question' : question, 'hints' : timehints })
-        # Exiting the for-loop means that the game is completed for that user.
-        return render(request, 'main/game.html', {'game' : curr_game, 'message' : "Du har klarat av nxgame! Du kom på plats %s" % user_episode.finish_place()})
+        hints = Timehint.objects.filter(
+            question=question,
+            delay__lt=(timezone.now() - user_question.start_time).total_seconds()
+        )
+        return render(request, game_template, { 'hints' : hints, 'question' : question })
 
     elif request.method == "POST":
-        pass
+        user_answer = request.POST.get('user-answer')
+        correct_answers = Question_answer.get_all_answers(question)
+        trigger_replies = Question_reply.get_all_triggers_and_replies(question)
 
-    return render(request, 'main/game.html', {'game' : curr_game, 'active_games' : episodes })
+        # TODO, write a handler/view when answer has been given.
+        # It should be a view which says which place you finished the question on etc.
+        # Right now, just show a message to the next view.
+        if user_answer in correct_answers:
+            unfinished_episode.make_progress()
+            messages.add_message(request, messages.INFO, 'RÄTT')
+        elif user_answer in trigger_replies:
+            messages.add_message(
+                request,
+                messages.INFO,
+                'TRIGGERED: %s' % trigger_replies[user_answer]
+            )
+        else:
+            messages.add_message(request, messages.INFO, 'FEL')
+        return redirect('/game/')
 
 def index(request):
     if request.user.is_authenticated(): # temporary
@@ -71,7 +83,6 @@ def rules(request):
 
 def old(request):
     return render(request, 'main/old.html')
-
 
 # This might not belong here. But yeah, keep it here at the moment.
 def check_auth(request):
