@@ -16,9 +16,10 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django_cas_ng.views import login, logout, callback
+from main.views import check_auth
 
 urlpatterns = [
-    url(r'^admin/login', 'main.views.check_auth'),
+    url(r'^admin/login', check_auth),
     url(r'^admin/', admin.site.urls),
     url(r'^login/', login, name='login'),
     url(r'^logout/', logout, name='logout'),
