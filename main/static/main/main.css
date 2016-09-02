@@ -73,15 +73,16 @@ body {
 .nav a {
     display: inline-block;
     padding: 10px 22px;
-    margin: 5px;
     border: 1px solid #ebebeb;
     border-radius: 5px;
 }
 
-@media all and (max-width: 800px) {
-    .nav a {
-        display: block;
-    }
+
+.main {
+    -webkit-transition: -webkit-transform 0.6s ease-in-out;
+    transition: transform 0.6s ease-in-out;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .selected {
@@ -100,6 +101,7 @@ body {
 
 .logo {
     width: 50%;
+    min-width: 600px;
     display: block;
     margin: 0 auto;
     text-align: center;
@@ -124,4 +126,51 @@ h1 {
 h1 > img {
     width: 32px;
     margin: 0 10px;
+}
+
+table {
+    display: inline-block;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 3px;
+    border-spacing: 0;
+}
+
+tr:first-child {
+    background-color: #AAAAAA;
+}
+
+td, th {
+    text-align: center;
+    padding: 10px 30px;
+}
+
+.table-episode {
+    background-color: rgba(255, 117, 117, 0.6);
+}
+
+@media all and (max-width: 960px) {
+    .nav a {
+        display: block;
+    }
+    .container {
+        padding: 10px;
+        width: auto;
+    }
+
+    body {
+        font-size: 14px;
+    }
+    .logo {
+        width: 70%;
+        min-width: 0;
+        max-width: 600;
+    }
+
+}
+
+@media all and (max-width: 500px) {
+    td, th {
+        padding: 10px 10px;
+    }
 }

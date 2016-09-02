@@ -1,13 +1,45 @@
 {% extends "main/base.html" %}
-{% load staticfiles %}  
+{% load staticfiles %}
+{% block content %}
+
+{% if progress_done %}
+<div style="text-align: center">
+<table>
+    <tr>
+        <th>#</th>
+        <th>Fråga</th>
+        <th>Tid avklarad</th>
+        <th>Position</th>
+    </tr>
+    {% for episode, questions in profile_data.items %}
+    <tr>
+        <th class="table-episode" colspan="4"> Episode {{ episode.number }} - {{ episode.name }} </th>
+    </tr>
+        {% for q in questions %}
+    <tr>
+        <td>{{ q.question.number }}</td>
+        <td><a href="#">{{ q.question.title }}</a></td>
+        <td>{{ q.finish_time }}</td>
+        <td>{{ q.finish_place }}</td>
+    </tr>
+        {% endfor %}
+    {% endfor %}
+</table>
+</div>
+{% endif %}
+{% endblock %}
+
+
 {% block nav %}
     <li><a href="/">Startsida</a></li>
     <li><a href="/rules">Regler & info</a></li>
     <li><a href="/game">Spela här</a></li>
     <li><a href="/tutorial">Tutorial</a></li>
+    {% if user.is_authenticated %}
     <li><a class="selected" href="/profile">Profil</a></li>
+    {% endif %}
     <li><a href="/old">Gamla games</a></li>
     {% if user.is_superuser %}
-        <li><a href="/admin">Admin</a></li>
+    <li><a href="/admin">Admin</a></li>
     {% endif %}
 {% endblock %}

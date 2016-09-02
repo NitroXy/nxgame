@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.conf import settings
 from .models import *
 from datetime import timedelta
+from itertools import groupby
 
 @login_required
 def game(request):
@@ -81,12 +82,21 @@ def rules(request):
     return render(request, 'main/rules.html')
 
 def profile(request):
-    return render(request, 'main/profile.html')
+    finished_questions = User_question.objects.filter(user=request.user, finish_time__isnull=False)
+    episode_user_groups = {}
+    for episode, questions in groupby(finished_questions, lambda x: x.question.episode):
+        episode_user_groups[episode] = list(questions)
+    return render(request, 'main/profile.html',
+            {
+                'profile_data' : episode_user_groups,
+                'progress_done' : True if finished_questions else False
+            })
 
 def old(request):
     return render(request, 'main/old.html')
 
 # This might not belong here. But yeah, keep it here at the moment.
+# TODO: Move to middleware.py
 def check_auth(request):
     """Instead of using django's admin-interface, redirect to CAS-login if user tries to access
     the admin site while not being authenticated"""
