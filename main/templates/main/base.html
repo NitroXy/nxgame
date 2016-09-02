@@ -1,38 +1,41 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<link rel="stylesheet" href="{% static 'main/main.css' %}"/>
-		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100, 300, 400|Roboto|Raleway|Open Sans">
-		<title>NXGame</title>
-	</head>
-	<body>
-		<header class="header group"> 
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="{% static 'main/main.css' %}"/>
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100, 300, 400|Roboto|Raleway|Open Sans">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>NXGame</title>
+    </head>
+    <body>
+        <header class="header group">
             <img class="logo" src={% static 'main/img/nxgamelogo.png' %}>
-			<nav class="nav">
-				<ul>
-					{% block nav %}
+            <nav class="nav">
+                <ul>
+                    {% block nav %}
                         <li><a href="/">Startsida</a></li>
                         <li><a href="/rules">Regler & info</a></li>
                         <li><a href="/game">Spela här</a></li>
                         <li><a href="/tutorial">Tutorial</a></li>
+                        {% if user.is_authenticated %}
                         <li><a href="/profile">Profil</a></li>
+                        {% endif %}
                         <li><a href="/old">Gamla games</a></li>
                         {% if user.is_superuser %}
-                            <li><a href="/admin">Admin</a></li>
+                        <li><a href="/admin">Admin</a></li>
                         {% endif %}
-					{% endblock %}
-				</ul>
-			</nav>
-		</header>
-		<section class="container main group">
-			{% block content %}
-				<p> Legget </p>
-			{% endblock  %}
-		</section>
-		<footer class="container group footer">
+                    {% endblock %}
+                </ul>
+            </nav>
+        </header>
+        <section id="game" class="container main group">
+            {% block content %}
+                <p> Legget </p>
+            {% endblock  %}
+        </section>
+        <footer class="container group footer">
             <p>Sidan är gjord av Ankan och Elon</p>
-		</footer>
-	</body>
+        </footer>
+    </body>
 </html>
