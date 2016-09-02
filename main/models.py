@@ -148,15 +148,14 @@ class User_episode(BaseModel):
             ).aggregate(models.Max('number')).values()[0]
         if self.current_question == max_question_number:
             self.finished = True
-            self.finish_time = timezone.now()
-        else:
-            user_question = User_question.objects.get(
-                question=Question.objects.get(episode=self.episode, number=self.current_question),
-                user=self.user
-            )
-            user_question.finish_time = timezone.now()
-            user_question.save()
-            self.current_question += 1
+            self.finish_time = timezone.now() # Keep redundancy for now
+        user_question = User_question.objects.get(
+            question=Question.objects.get(episode=self.episode, number=self.current_question),
+            user=self.user
+        )
+        user_question.finish_time = timezone.now()
+        user_question.save()
+        self.current_question += 1
         self.save()
 
     def __unicode__(self):
@@ -185,6 +184,11 @@ class User_question(BaseModel):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     start_time = models.DateTimeField(default=timezone.now)
     finish_time = models.DateTimeField(null=True)
+
+    @property
+    def finish_place(self):
+        users_ahead = User_question.objects.filter(question=self.question, finish_time__lt=self.finish_time)
+        return len(users_ahead) + 1
 
     def __unicode__(self):
         return u'User: %s, question: %s' % (self.user, self.question)
