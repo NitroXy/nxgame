@@ -5,9 +5,11 @@
     <li><a href="/rules">Regler & info</a></li>
     <li><a href="/game">Spela här</a></li>
     <li><a href="/tutorial">Tutorial</a></li>
+    {% if user.is_authenticated %}
     <li><a href="/profile">Profil</a></li>
+    {% endif %}
     <li><a class="selected" href="/old">Gamla games</a></li>
     {% if user.is_superuser %}
-        <li><a href="/admin">Admin</a></li>
+    <li><a href="/admin">Admin</a></li>
     {% endif %}
 {% endblock %}
