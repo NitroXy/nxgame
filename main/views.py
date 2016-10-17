@@ -14,7 +14,7 @@ from itertools import groupby
 def game(request):
     game_template = 'main/game.html'
 
-    active_game = Game.objects.get(name='nxgame21') # Temporary, get this from database later
+    active_game = Game.objects.get_or_none(is_active=True)
     game_episodes = Episode.objects.filter(game=active_game)
 
     if not game_episodes:
@@ -94,6 +94,7 @@ def profile(request):
 
 def old(request):
     return render(request, 'main/old.html')
+
 
 # This might not belong here. But yeah, keep it here at the moment.
 # TODO: Move to middleware.py

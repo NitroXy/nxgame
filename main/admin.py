@@ -3,7 +3,9 @@ from .models import *
 
 # Register your models here.
 
-admin.site.register(Game)
+@admin.register(Game)
+class GameAdmin(admin.ModelAdmin):
+    list_display = ('name', 'is_active')
 
 @admin.register(Episode)
 class EpisodeAdmin(admin.ModelAdmin):
@@ -12,19 +14,26 @@ class EpisodeAdmin(admin.ModelAdmin):
 
 class QuestionAnswerInline(admin.TabularInline):
     model = Question_answer
+    extra = 1
 
+class QuestionUploadInline(admin.TabularInline):
+    model = Question_upload
+    extra = 1
 
 class TimehintInline(admin.TabularInline):
     model = Timehint
+    extra = 1
 
 class QuestionReplyInline(admin.TabularInline):
     model = Question_reply
+    extra = 1
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     list_filter = ('episode', 'episode__game')
-    list_display = ('get_game', 'episode', 'number')
+    list_display = ('title', 'get_game', 'episode', 'number')
     inlines = [
+        QuestionUploadInline,
         QuestionAnswerInline,
         TimehintInline,
         QuestionReplyInline,

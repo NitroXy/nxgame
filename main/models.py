@@ -1,12 +1,15 @@
 # encoding: utf-8
-from django.db import models
+from django.db import models, transaction
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 from django.contrib import messages
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import timedelta
+from .handlers import get_game_upload_folder
+from os import path, remove
 
 class BaseManager(models.Manager):
     def get_or_none(self, **kwargs):
@@ -70,6 +73,16 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Game(BaseModel):
     name = models.CharField(max_length=128, primary_key=True)
+    is_active = models.BooleanField()
+
+    @transaction.atomic
+    def save(self, *args, **kwargs):
+        super(Game, self).save(*args, **kwargs)
+        if self.is_active:
+            active_games = Game.objects.filter(is_active=True).exclude(name=self.name)
+            for game in active_games:
+                game.is_active = False
+                game.save()
 
     def __unicode__(self):
         return u'%s' % self.name
@@ -169,7 +182,7 @@ class Question(BaseModel):
     episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
     number = models.IntegerField()
     title = models.CharField(max_length=128)
-    question = models.CharField(max_length=2048)
+    question = models.TextField(max_length=4096)
     users = models.ManyToManyField(User, through='User_question')
 
     class Meta:
@@ -236,6 +249,31 @@ class Question_reply(BaseModel):
 
     class Meta:
         unique_together = ('question', 'reply')
+
+
+class Question_upload(BaseModel):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    upload = models.FileField(upload_to=get_game_upload_folder)
+
+    @staticmethod
+    def get_all_uploads(question):
+        uploads = Question_upload.objects.filter(question=question)
+        return [x.upload for x in uploads]
+
+    class Meta:
+        unique_together = ('question', 'upload')
+
+    def save(self, *args, **kwargs):
+        # TODO: Validate this in upload form.
+        if not path.exists(
+                path.join(
+                    settings.MEDIA_ROOT,
+                    get_game_upload_folder(self, self.upload.name))):
+            super(Question_upload, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        remove(self.upload._get_path())
+        super(Question_upload, self).delete(*args, **kwargs)
 
 class User_answer(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
