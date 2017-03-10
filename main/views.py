@@ -70,7 +70,6 @@ def game(request):
 
 def index(request):
     if request.user.is_authenticated(): # temporary
-        print User_episode.objects.filter(user=request.user)
         return render(request, 'main/auth.html')
     else:
         return render(request, 'main/index.html')
