@@ -11,6 +11,7 @@ User = get_user_model()
 
 __all__ = ['NXGameBackend']
 
+
 class NXGameBackend(ModelBackend):
     """NXGameBackend authentication backend
     Based on CASBackend, with small modifications to fit NXGame"""
@@ -26,9 +27,16 @@ class NXGameBackend(ModelBackend):
             created = False
         except User.DoesNotExist:
             if username in getattr(settings, 'ADMINS', []):
-                user = User.objects.create_superuser(attributes['user_id'], username, fullname=attributes['fullname'])
+                user = User.objects.create_superuser(
+                    attributes['user_id'],
+                    username,
+                    fullname=attributes['fullname']
+                )
             else:
-                user = User.objects.create_user(attributes['user_id'], username, fullname=attributes['fullname'])
+                user = User.objects.create_user(
+                    attributes['user_id'],
+                    username, fullname=attributes['fullname']
+                )
             user.save()
             created = True
 

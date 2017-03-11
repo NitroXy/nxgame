@@ -6,4 +6,4 @@ from django.dispatch import receiver
 
 
 class MainConfig(AppConfig):
-	name = 'main'
+    name = 'main'

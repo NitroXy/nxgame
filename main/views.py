@@ -1,14 +1,13 @@
-# encoding: utf-8
-from os import listdir, path
+#encoding: utf-8
+from datetime import timedelta
+from itertools import groupby
+
 from django.template import loader
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.conf import settings
 from .models import *
-from datetime import timedelta
-from itertools import groupby
+
 
 @login_required
 def game(request):
@@ -25,7 +24,10 @@ def game(request):
         )
         return render(request, game_template)
 
-    unfinished_episode = User_episode.get_unfinished_episode(request, game_episodes)
+    unfinished_episode = User_episode.get_unfinished_episode(
+        request,
+        game_episodes
+    )
 
     if not unfinished_episode or not unfinished_episode.playable(request):
         return render(request, game_template)
@@ -43,9 +45,16 @@ def game(request):
 
         hints = Timehint.objects.filter(
             question=question,
-            delay__lt=(timezone.now() - user_question.start_time).total_seconds()
+            delay__lt=(timezone.now() -
+                       user_question.start_time).total_seconds()
         )
-        return render(request, game_template, { 'hints' : hints, 'question' : question })
+        return render(
+            request,
+            game_template, {
+                'hints': hints,
+                'question': question
+            }
+        )
 
     elif request.method == "POST":
         user_answer = request.POST.get('user-answer')
@@ -53,7 +62,7 @@ def game(request):
         trigger_replies = Question_reply.get_all_triggers_and_replies(question)
 
         # TODO, write a handler/view when answer has been given.
-        # It should be a view which says which place you finished the question on etc.
+        # Should be a view which says which place you finished the question on.
         # Right now, just show a message to the next view.
         if user_answer in correct_answers:
             unfinished_episode.make_progress()
@@ -68,28 +77,38 @@ def game(request):
             messages.add_message(request, messages.INFO, 'FEL')
         return redirect('/game/')
 
+
 def index(request):
-    if request.user.is_authenticated(): # temporary
+    if request.user.is_authenticated():  # temporary
         return render(request, 'main/auth.html')
     else:
         return render(request, 'main/index.html')
 
+
 def tutorial(request):
     return render(request, 'main/tutorial.html')
+
 
 def rules(request):
     return render(request, 'main/rules.html')
 
+
 def profile(request):
-    finished_questions = User_question.objects.filter(user=request.user, finish_time__isnull=False)
+    finished_questions = User_question.objects.filter(
+        user=request.user, finish_time__isnull=False)
     episode_user_groups = {}
-    for episode, questions in groupby(finished_questions, lambda x: x.question.episode):
+    for episode, questions in groupby(
+            finished_questions, lambda x: x.question.episode):
         episode_user_groups[episode] = list(questions)
-    return render(request, 'main/profile.html',
-            {
-                'profile_data' : episode_user_groups,
-                'progress_done' : True if finished_questions else False
-            })
+
+    return render(
+        request,
+        'main/profile.html', {
+            'profile_data': episode_user_groups,
+            'progress_done': True if finished_questions else False
+        }
+    )
+
 
 def old(request):
     return render(request, 'main/old.html')
@@ -98,7 +117,8 @@ def old(request):
 # This might not belong here. But yeah, keep it here at the moment.
 # TODO: Move to middleware.py
 def check_auth(request):
-    """Instead of using django's admin-interface, redirect to CAS-login if user tries to access
+    """Instead of using django's admin-interface,
+    redirect to CAS-login if user tries to access
     the admin site while not being authenticated"""
     if request.user.is_authenticated():
         if request.user.is_superuser:
