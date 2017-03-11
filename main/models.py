@@ -146,8 +146,8 @@ class User_episode(BaseModel):
                 request,
                 messages.INFO,
                 'Episode {} har inte startat än. Den startar {}.'.format(
-                    current_episode.number,
-                    current_episode.start_time
+                    self.episode.number,
+                    self.episode.start_time
                     .strftime("%d %B klockan %H:%M.%S")
                 )
             )
@@ -157,7 +157,7 @@ class User_episode(BaseModel):
                     messages.INFO,
                     "Eftersom du har ett försprång så startar du klockan {}"
                     .format(
-                        (current_episode.start_time -
+                        (self.episode.start_time -
                          timedelta(seconds=headstart.headstart))
                         .strftime("%H:%M.%S"))
                 )
