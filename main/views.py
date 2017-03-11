@@ -71,7 +71,7 @@ def game(request):
             messages.add_message(
                 request,
                 messages.INFO,
-                'TRIGGERED: %s' % trigger_replies[user_answer]
+                'TRIGGERED: {}'.format(trigger_replies[user_answer])
             )
         else:
             messages.add_message(request, messages.INFO, 'FEL')

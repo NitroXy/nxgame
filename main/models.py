@@ -94,7 +94,7 @@ class Game(BaseModel):
                 game.save()
 
     def __unicode__(self):
-        return u'%s' % self.name
+        return u'{}'.format(self.name)
 
 
 class Episode(BaseModel):
@@ -111,7 +111,7 @@ class Episode(BaseModel):
         ordering = ['game', 'number']
 
     def __unicode__(self):
-        return u'%s: %s' % (self.number, self.name)
+        return u'{}: {}'.format(self.number, self.name)
 
 
 class User_episode(BaseModel):
@@ -144,17 +144,22 @@ class User_episode(BaseModel):
         if not can_play:
             messages.add_message(
                 request,
-                messages.INFO, 'Episode %s har inte startat än. Den startar %s.' %
-                current_episode.number,
-                current_episode.start_time.strftime("%d %B klockan %H:%M.%S"))
+                messages.INFO,
+                'Episode {} har inte startat än. Den startar {}.'.format(
+                    current_episode.number,
+                    current_episode.start_time
+                    .strftime("%d %B klockan %H:%M.%S")
+                )
+            )
             if headstart:
                 messages.add_message(
                     request,
                     messages.INFO,
-                    "Eftersom du har ett försprång så startar du klockan %s" %
-                    (current_episode.start_time -
-                     timedelta(seconds=headstart.headstart))
-                    .strftime("%H:%M.%S")
+                    "Eftersom du har ett försprång så startar du klockan {}"
+                    .format(
+                        (current_episode.start_time -
+                         timedelta(seconds=headstart.headstart))
+                        .strftime("%H:%M.%S"))
                 )
         return can_play
 
@@ -173,7 +178,8 @@ class User_episode(BaseModel):
         messages.add_message(
             request,
             messages.INFO,
-            "Du har klarat av nxgame! Du kom på plats %s" % candidate.finish_place()
+            "Du har klarat av nxgame! Du kom på plats {}".format(
+                candidate.finish_place())
         )
         return False
 
