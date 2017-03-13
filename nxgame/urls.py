@@ -26,3 +26,5 @@ urlpatterns = [
     url(r'^callback$', callback, name='cas_ng_proxy_callback'),
     url(r'^', include('main.urls'))
 ]
+
+handler404 = 'main.error_views.handle_404'

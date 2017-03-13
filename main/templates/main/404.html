@@ -1,0 +1,19 @@
+{% extends "main/base.html" %}
+{% load staticfiles %}
+{% block content %}
+    <h1>404 - Not found</h1>
+{% endblock %}
+
+{% block nav %}
+    <li><a class="selected" href="/">Startsida</a></li>
+    <li><a href="/rules">Regler & info</a></li>
+    <li><a href="/game">Spela här</a></li>
+    <li><a href="/tutorial">Tutorial</a></li>
+    {% if user.is_authenticated %}
+    <li><a href="/profile">Profil</a></li>
+    {% endif %}
+    <li><a href="/old">Gamla games</a></li>
+    {% if user.is_superuser %}
+    <li><a href="/admin">Admin</a></li>
+    {% endif %}
+{% endblock %}
