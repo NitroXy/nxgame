@@ -1,13 +1,17 @@
 {% extends "main/base.html" %}
 {% load staticfiles %}  
+
+{% block info %}
+    {% if messages %}
+        {% for message in messages %}
+        <section id="messages" class="container main group border-box {{ message.tags }}">
+            <p class="message-info">{{ message }} </p>
+        {% endfor %}
+        </section>
+    {% endif %}
+{% endblock %}
+
 {% block content %}
-
-{% if messages %}
-    {% for message in messages %}
-        message: {{ message }}
-    {% endfor %}
-{% endif %}
-
 {% if question.title %}
     <h1><img src="{% static 'main/img/ast.png' %}">{{ question.title }}<img src="{% static 'main/img/ast.png' %}"></h1>
 {% endif %}

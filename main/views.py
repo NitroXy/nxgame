@@ -66,15 +66,15 @@ def game(request):
         # Right now, just show a message to the next view.
         if user_answer in correct_answers:
             unfinished_episode.make_progress()
-            messages.add_message(request, messages.INFO, 'RÄTT')
+            messages.add_message(request, messages.SUCCESS, 'Du svarade rätt!')
         elif user_answer in trigger_replies:
             messages.add_message(
                 request,
                 messages.INFO,
-                'TRIGGERED: {}'.format(trigger_replies[user_answer])
+                'Wow, nästan! Hälsning från ankan: {}'.format(trigger_replies[user_answer])
             )
         else:
-            messages.add_message(request, messages.INFO, 'FEL')
+            messages.add_message(request, messages.ERROR, 'Du svarade fel...')
         return redirect('/game/')
 
 

@@ -29,10 +29,13 @@
                 </ul>
             </nav>
         </header>
-        <section id="game" class="container main group">
+        {% block info %}
+        {% endblock %}
+
+        <section id="game" class="container main group border-box">
             {% block content %}
-                <p> Legget </p>
-            {% endblock  %}
+            <p> Legget </p>
+            {% endblock %}
         </section>
         <footer class="container group footer">
             <p>Sidan är gjord av Ankan och Elon</p>
