@@ -1,0 +1,40 @@
+{% extends "main/base.html" %}
+{% load staticfiles %}
+
+{% block info %}
+    <section id="old-question" class="container main group border-box error">
+    {% if not messages %}
+    <p class="info">Du tittar just nu på en gammal fråga. Tryck <a href="/game">här</a> om du vill komma tillbaka till det nuvarande spelet.</p>
+    {% endif %}
+    {% for message in messages %}
+        <p class="message-info">{{ message }} </p>
+    {% endfor %}
+    </section>
+{% endblock %}
+
+{% if not messages %}
+    {% block content %}
+
+
+    {% if question.title %}
+        <h1><img src="{% static 'main/img/ast.png' %}">{{ question.title }}<img src="{% static 'main/img/ast.png' %}"></h1>
+    {% endif %}
+
+    {{ question.question|safe }}
+
+    {% endblock %}
+{% endif %}
+
+{% block nav %}
+    <li><a href="/">Startsida</a></li>
+    <li><a href="/rules">Regler & info</a></li>
+    <li><a href="/game">Spela här</a></li>
+    <li><a href="/tutorial">Tutorial</a></li>
+    {% if user.is_authenticated %}
+    <li><a class="selected" href="/profile">Profil</a></li>
+    {% endif %}
+    <li><a href="/old">Gamla games</a></li>
+    {% if user.is_superuser %}
+        <li><a href="/admin">Admin</a></li>
+    {% endif %}
+{% endblock %}

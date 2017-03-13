@@ -18,7 +18,7 @@
         {% for q in questions %}
     <tr>
         <td>{{ q.question.number }}</td>
-        <td><a href="#">{{ q.question.title }}</a></td>
+        <td><a href="/questions/{{episode.number}}/{{q.question.number}}">{{ q.question.title }}</a></td>
         <td>{{ q.finish_time }}</td>
         <td>{{ q.finish_place }}</td>
     </tr>

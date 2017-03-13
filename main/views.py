@@ -1,10 +1,11 @@
-#encoding: utf-8
+# encoding: utf-8
 from datetime import timedelta
 from itertools import groupby
 
+from django.http import Http404
 from django.template import loader
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import *
 
@@ -71,11 +72,45 @@ def game(request):
             messages.add_message(
                 request,
                 messages.INFO,
-                'Wow, nästan! Hälsning från ankan: {}'.format(trigger_replies[user_answer])
+                'Wow, nästan! Hälsning från ankan: {}'.format(
+                    trigger_replies[user_answer])
             )
         else:
             messages.add_message(request, messages.ERROR, 'Du svarade fel...')
         return redirect('/game/')
+
+
+@login_required
+def questions(request, ep, task):
+    try:
+        question = get_object_or_404(
+            Question,
+            episode=int(ep),
+            number=int(task)
+        )
+    except ValueError:
+        raise Http404
+
+    user_question = get_object_or_404(
+        User_question,
+        user=request.user,
+        question=question
+    )
+    if not user_question.finish_time:
+        messages.add_message(
+            request,
+            messages.INFO,
+            'Du måste klarat av frågan för att kunna kolla på den i efterhand!'
+        )
+        return render(request, 'main/question.html')
+
+    return render(
+        request,
+        'main/question.html',
+        {
+            'question': question,
+        }
+    )
 
 
 def index(request):

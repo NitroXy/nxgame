@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^game/$', views.game, name='game'),
     url(r'^profile/$', views.profile, name='profile'),
     url(r'^old/$', views.old, name='old'),
+    url(r'^questions/(\d+)/(\d+)$', views.questions, name='questions'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
